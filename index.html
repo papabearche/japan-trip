@@ -8,191 +8,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --muji-bg: #F5F5F3;
-            --muji-gray: #7F878F;
-            --muji-dark: #333333;
-            --muji-accent: #A62121; /* 無印標誌紅 */
-        }
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: var(--muji-bg);
-            color: var(--muji-dark);
-            padding-bottom: 80px;
-        }
+        :root { --muji-bg: #F5F5F3; --muji-dark: #333333; --muji-accent: #A62121; }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: var(--muji-bg); color: var(--muji-dark); padding-bottom: 80px; }
         h1, h2, .font-serif { font-family: 'Shippori Mincho', serif; }
         .muji-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .page { display: none; }
         .page.active { display: block; animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .nav-active { color: var(--muji-accent) !important; }
-        /* Hide scrollbar */
-        ::-webkit-scrollbar { display: none; }
+        .timeline-line { position: absolute; left: 15px; top: 0; bottom: 0; width: 1px; background: #E5E7EB; z-index: 0; }
+        .timeline-dot { position: relative; z-index: 10; width: 8px; height: 8px; border-radius: 50%; background: #D1D5DB; border: 2px solid white; margin-left: 11px; }
+        .dot-important { background: var(--muji-accent); }
     </style>
 </head>
 <body>
 
-    <header class="p-6 bg-white border-b border-gray-200">
-        <h1 class="text-2xl font-semibold tracking-wider">東京自駕 6 日遊</h1>
-        <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest">2026/02/13 - 02/18</p>
-    </header>
-
-    <main class="p-4 overflow-x-hidden">
-
-        <section id="plan" class="page active space-y-4">
-            <div class="muji-card p-5 border-l-4 border-red-800">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span class="text-xs text-red-800 font-bold uppercase tracking-tighter">Day 1</span>
-                        <h3 class="text-lg font-bold">2/13 (五) 抵達東京</h3>
-                    </div>
-                    <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-500">成田・新宿</span>
-                </div>
-                <div class="space-y-4 text-sm">
-                    <div class="flex gap-3">
-                        <div class="w-12 text-gray-400">12:00</div>
-                        <div class="flex-1">
-                            <p class="font-medium text-red-800">BR184 抵達成田 (重要)</p>
-                            <p class="text-xs text-gray-500 mt-1">N'EX 前往新宿 (約 80min, ¥3,250)</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3 border-l-2 border-gray-100 pl-3 ml-1.5">
-                        <div class="w-12 text-gray-400">15:00</div>
-                        <div class="flex-1">
-                            <p class="font-medium underline"><a href="https://www.booking.com/hotel/jp/star-house-ueno-tokyo.zh-tw.html">Star House 新宿入住</a></p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-12 text-gray-400">19:00</div>
-                        <div class="flex-1">
-                            <p class="font-medium italic">AIN SOPH. Journey 新宿</p>
-                            <span class="text-[10px] bg-green-50 text-green-700 px-1 border border-green-200">蔬食友善：純素鬆餅與漢堡</span>
-                            <div class="mt-2 flex gap-2">
-                                <a href="https://maps.app.goo.gl/9R6K9F8R" class="text-xs bg-gray-800 text-white px-3 py-1 rounded">Maps</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="muji-card p-5 border-l-4 border-black">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span class="text-xs text-gray-400 font-bold uppercase">Day 3</span>
-                        <h3 class="text-lg font-bold">2/15 (日) 箱根自駕開始</h3>
-                    </div>
-                </div>
-                <div class="space-y-4 text-sm">
-                    <div class="flex gap-3">
-                        <div class="w-12 text-gray-400">08:00</div>
-                        <div class="flex-1 text-red-800 font-bold">搭乘浪漫特快前往小田原 (集合)</div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-12 text-gray-400">10:00</div>
-                        <div class="flex-1 bg-gray-50 p-2 rounded">
-                            <p class="font-bold">小田原站取車 (自駕)</p>
-                            <p class="text-[10px] text-gray-500">預計費用：¥18,000 (含保險)</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="w-12 text-gray-400">16:00</div>
-                        <div class="flex-1">
-                            <p class="font-medium italic">箱根蔦屋旅館入住</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p class="text-center text-[10px] text-gray-400">更多行程請點擊詳情...</p>
-        </section>
-
-        <section id="guide" class="page space-y-6">
-            <div class="muji-card overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1545562083-a600704fa487?auto=format&fit=crop&w=800&q=80" class="w-full h-40 object-cover">
-                <div class="p-5">
-                    <h2 class="text-xl font-bold mb-2">箱根雕刻森林美術館</h2>
-                    <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                        這是日本第一座露天美術館。特別推薦「網之森」與「畢卡索館」。對於 2 歲小孩來說，這裡的超大草皮與色彩鮮豔的雕塑非常適合奔跑。
-                    </p>
-                    <div class="h-40 bg-gray-200 rounded-lg overflow-hidden">
-                        <iframe width="100%" height="100%" frameborder="0" src="https://www.openstreetmap.org/export/embed.html?bbox=139.0487%2C35.2425%2C139.0536%2C35.2464&layer=mapnik"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <div class="muji-card p-5">
-                <h2 class="text-xl font-bold mb-2">富士野生動物園</h2>
-                <div class="text-sm text-gray-600 space-y-2">
-                    <p>💡 <b>冷知識：</b> 這是日本少數可以「開自己的車」進入叢林區的動物園。2 月份去可能會看到獅子在雪地中走動的奇景。</p>
-                    <p>⚠️ 注意：窗戶務必鎖死，不可隨意下車。</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="wallet" class="page space-y-4">
-            <div class="muji-card p-5">
-                <h4 class="text-xs font-bold text-gray-400 mb-3 tracking-widest uppercase">Quick Exchange</h4>
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2">
-                        <input id="calc-input" type="text" placeholder="輸入算式 e.g. 1500+200*3" class="flex-1 border-b border-gray-200 py-2 focus:outline-none text-lg">
-                        <button onclick="calculate()" class="bg-gray-800 text-white px-4 py-2 rounded">=</button>
-                    </div>
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-400">匯率設定：<input id="rate" type="number" value="0.21" step="0.001" class="w-12 border-b"></span>
-                        <span class="font-bold text-red-800">TWD <span id="calc-result">0</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="muji-card p-5">
-                <div class="flex gap-2">
-                    <input id="item-name" type="text" placeholder="品項" class="w-1/2 border-b border-gray-200 py-1 text-sm">
-                    <input id="item-price" type="number" placeholder="日幣 ¥" class="w-1/4 border-b border-gray-200 py-1 text-sm">
-                    <button onclick="addExpense()" class="bg-gray-800 text-white rounded-full w-8 h-8">+</button>
-                </div>
-                <div class="mt-4 flex items-center justify-center border-2 border-dashed border-gray-100 py-4 rounded-lg relative">
-                    <input type="file" id="photo-input" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleImage(this)">
-                    <div class="text-center">
-                        <i class="fa-solid fa-camera text-gray-300 mb-1"></i>
-                        <p class="text-[10px] text-gray-400">點擊拍照或上傳單據</p>
-                    </div>
-                </div>
-                <div id="preview-container" class="mt-2 hidden">
-                    <img id="img-preview" src="" class="w-20 h-20 object-cover rounded border">
-                </div>
-            </div>
-
-            <div id="expense-list" class="space-y-2">
-                </div>
-        </section>
-
-        <section id="lists" class="page space-y-4">
-            <div class="muji-card p-5">
-                <h3 class="font-bold mb-3">行前準備 CheckList</h3>
-                <div id="checklist" class="space-y-2 text-sm">
-                    <div class="flex items-center gap-2"><input type="checkbox"> <span>護照/簽證/VJW QR Code</span></div>
-                    <div class="flex items-center gap-2"><input type="checkbox"> <span>駕照正本與日文譯本 (自駕必備)</span></div>
-                    <div class="flex items-center gap-2"><input type="checkbox"> <span>2 歲孩童保暖衣物/備用藥品</span></div>
-                </div>
-            </div>
-            <div class="muji-card p-5">
-                <h3 class="font-bold mb-3">個人備忘錄</h3>
-                <textarea id="memo" oninput="saveMemo()" class="w-full h-32 bg-gray-50 p-3 text-sm rounded-lg focus:outline-none" placeholder="輸入內容，連結會自動偵測..."></textarea>
-                <div id="memo-links" class="mt-2 flex flex-wrap gap-2"></div>
-            </div>
-        </section>
-
-        <section id="info" class="page space-y-4">
-            <div class="grid grid-cols-2 gap-3 text-center">
-                <a href="https://www.jma.go.jp/jma/index.html" class="muji-card p-4">
-                    <i class="fa-solid fa-cloud-sun text-gray-400 mb-1"></i>
-                    <p class="text-xs">日本氣象廳</p>
-                </a>
-                <a href="tel:110" class="muji-card p-4 text-red-800">
-                    <i class="fa-solid fa-phone-flip mb-1"></i>
-                    <p class="text-xs font-bold">110 報案</p>
-                </a>
-            </div>
-            <div class="muji-card p-5 text-sm space-y-3">
-                <h4 class="font-bold border-b pb-2">緊急聯絡資訊</h4>
-                <p><b>駐日代表處：</b><br>+81-3-3280-7811</p>
-                <p><b>海外急難救助：</b><br>001-800-0885-08
+    <header class="p-6 bg
