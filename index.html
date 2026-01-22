@@ -2,103 +2,328 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>東京・箱根・富士 6日遊</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>東京・箱根・富士 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Shippori+Mincho&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #F8F7F4; color: #4A4A4A; }
-        .muji-card { background: white; border-radius: 2px; border: 1px solid #E5E5E5; margin-bottom: 1rem; }
-        .tag-veg { background-color: #E8F5E9; color: #2E7D32; font-size: 0.7rem; padding: 2px 6px; border-radius: 2px; }
-        .tag-car { background-color: #FFF3E0; color: #E65100; font-size: 0.7rem; padding: 2px 6px; border-radius: 2px; }
+        :root {
+            --muji-bg: #F5F5F3;
+            --muji-text: #333333;
+            --muji-accent: #7F878F;
+            --muji-red: #A62121; /* 無印風格的深紅，用於重要標示 */
+        }
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--muji-bg);
+            color: var(--muji-text);
+            margin-bottom: 70px; /* 為底部導航留空間 */
+            -webkit-tap-highlight-color: transparent;
+        }
+        .muji-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #EAEAEA;
+        }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-active { color: var(--muji-red) !important; font-weight: 500; }
+        .btn-primary { background: var(--muji-text); color: white; border-radius: 4px; }
+        .accent-text { color: var(--muji-red); }
     </style>
 </head>
-<body class="max-w-md mx-auto p-5">
-    <header class="mb-8 mt-4 border-b border-stone-200 pb-6 text-center">
-        <h1 class="text-xl font-light tracking-[0.2em] text-stone-700">TOKYO ITINERARY</h1>
-        <p class="text-[0.7rem] text-stone-400 mt-2 uppercase tracking-widest">2026.02.13 — 02.18</p>
+<body>
+
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+        <h1 class="text-lg font-medium tracking-widest" style="font-family: 'Shippori Mincho', serif;">2026 日本旅程</h1>
+        <span id="current-date" class="text-xs text-gray-500">2026/02/13</span>
     </header>
 
-    <div class="muji-card p-5">
-        <div class="flex justify-between items-start mb-2">
-            <span class="text-xs font-medium text-stone-400">02.13 FRI</span>
-            <span class="text-[0.6rem] border border-stone-300 px-1 text-stone-400">DAY 1</span>
-        </div>
-        <h2 class="text-base font-normal mb-3">抵達成田 ➔ 新宿</h2>
-        <ul class="text-sm space-y-2 text-stone-600">
-            <li>• 12:00 抵達成田 (BR184)</li>
-            <li>• 新宿御苑漫步</li>
-            <li>• <span class="tag-veg">蔬食晚餐</span> AIN SOPH. Journey</li>
-        </ul>
-    </div>
+    <main class="p-4">
+        
+        <section id="page-plan" class="page active">
+            <div class="space-y-6">
+                <div class="muji-card p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-bold border-b-2 border-red-800">D1 02/13 (五)</span>
+                        <span class="text-xs text-gray-400">成田・新宿</span>
+                    </div>
+                    <ul class="space-y-4 text-sm relative border-l border-gray-100 pl-4 ml-2">
+                        <li>
+                            <div class="absolute -left-1.5 mt-1.5 w-3 h-3 rounded-full bg-gray-300"></div>
+                            <p class="font-medium accent-text">12:00 抵達成田 (BR184)</p>
+                            <p class="text-gray-500">搭乘 N'EX 至新宿 Check-in</p>
+                        </li>
+                        <li>
+                            <div class="absolute -left-1.5 mt-1.5 w-3 h-3 rounded-full bg-gray-300"></div>
+                            <p class="font-medium">下午：新宿御苑漫步</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=新宿御苑" class="text-xs text-blue-600 underline mt-1 block"><i class="fa-solid fa-location-dot mr-1"></i>Google Maps</a>
+                        </li>
+                        <li>
+                            <div class="absolute -left-1.5 mt-1.5 w-3 h-3 rounded-full bg-gray-300"></div>
+                            <p class="font-medium">晚餐：AIN SOPH. Journey (蔬食)</p>
+                            <span class="bg-green-50 text-green-700 text-[10px] px-1 rounded border border-green-100">Vegan Friendly</span>
+                        </li>
+                    </ul>
+                </div>
 
-    <div class="muji-card p-5">
-        <div class="flex justify-between items-start mb-2">
-            <span class="text-xs font-medium text-stone-400">02.14 SAT</span>
-            <span class="text-[0.6rem] border border-stone-300 px-1 text-stone-400">DAY 2</span>
-        </div>
-        <h2 class="text-base font-normal mb-3">淺草文化 ➔ 豐洲光影</h2>
-        <ul class="text-sm space-y-2 text-stone-600">
-            <li>• 淺草文化體驗</li>
-            <li>• teamLab Planets (下午)</li>
-            <li>• <span class="tag-veg">蔬食晚餐</span> Vegan Ramen UZU</li>
-        </ul>
-    </div>
+                <div class="muji-card p-4 border-l-4 border-red-800">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-bold">D3 02/15 (日) 箱根自駕</span>
+                        <span class="text-xs bg-red-800 text-white px-2 py-0.5 rounded">重要集合</span>
+                    </div>
+                    <p class="text-sm font-bold mb-2">10:00 小田原站取車</p>
+                    <p class="text-xs text-gray-500 mb-4">攜帶：駕照正本、譯本、護照</p>
+                    <div class="flex gap-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=小田原駅" class="flex-1 text-center py-2 bg-gray-100 rounded text-xs">取車點</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=箱根彫刻の森美術館" class="flex-1 text-center py-2 bg-gray-100 rounded text-xs">雕刻之森</a>
+                    </div>
+                </div>
 
-    <div class="muji-card p-5 border-t-2 border-stone-400">
-        <div class="flex justify-between items-start mb-2">
-            <span class="text-xs font-medium text-stone-400">02.15 SUN</span>
-            <span class="tag-car">自駕開始</span>
-        </div>
-        <h2 class="text-base font-normal mb-3">箱根雕刻森林 ➔ 仙石原</h2>
-        <ul class="text-sm space-y-2 text-stone-600">
-            <li class="font-medium text-stone-800">• 10:00 小田原站取車</li>
-            <li>• 箱根雕刻森林美術館</li>
-            <li>• 宿：仙石原溫泉飯店</li>
-        </ul>
-    </div>
+                <div class="muji-card p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-bold">D4 02/16 (一) 富士野生</span>
+                    </div>
+                    <p class="text-sm mb-2 font-medium">富士野生動物園 (自駕入園)</p>
+                    <p class="text-xs text-gray-500 mb-2">2 歲小孩免門票，留意氣溫極低。</p>
+                    <p class="text-xs accent-text font-medium">17:00 前返回小田原還車</p>
+                </div>
+            </div>
+        </section>
 
-    <div class="muji-card p-5">
-        <div class="flex justify-between items-start mb-2">
-            <span class="text-xs font-medium text-stone-400">02.16 MON</span>
-            <span class="tag-car">自駕還車</span>
-        </div>
-        <h2 class="text-base font-normal mb-3">富士野生動物園 ➔ 新宿</h2>
-        <ul class="text-sm space-y-2 text-stone-600">
-            <li>• 自駕入園體驗</li>
-            <li>• 17:00 前小田原還車</li>
-            <li>• 搭車返回新宿據點</li>
-        </ul>
-    </div>
+        <section id="page-guide" class="page">
+            <h2 class="text-lg font-medium mb-4 border-l-4 border-gray-800 pl-2">深度導覽</h2>
+            <div class="muji-card overflow-hidden mb-6">
+                <img src="https://images.unsplash.com/photo-1545562083-a600704fa487?auto=format&fit=crop&w=800&q=80" class="w-full h-40 object-cover">
+                <div class="p-4">
+                    <h3 class="font-bold mb-2">箱根雕刻之森美術館</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        1969年開館，是日本第一座戶外美術館。重點必看：畢卡索館及能讓孩子攀爬的「網之森」。
+                    </p>
+                    <div class="mt-4 h-48 bg-gray-100 rounded">
+                        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=139.048%2C35.242%2C139.053%2C35.246&layer=mapnik"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="muji-card p-5">
-        <div class="flex justify-between items-start mb-2">
-            <span class="text-xs font-medium text-stone-400">02.17 TUE</span>
-            <span class="text-[0.6rem] border border-stone-300 px-1 text-stone-400">DAY 5</span>
-        </div>
-        <h2 class="text-base font-normal mb-3">上野文化 ➔ 阿美橫丁</h2>
-        <ul class="text-sm space-y-2 text-stone-600">
-            <li>• 國立科學博物館</li>
-            <li>• 阿美橫丁補貨</li>
-            <li>• <span class="tag-veg">蔬食晚餐</span> T's Tantan</li>
-        </ul>
-    </div>
+        <section id="page-wallet" class="page">
+            <div class="muji-card p-4 mb-4">
+                <h3 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest">Rate Calculator</h3>
+                <div class="flex items-center gap-2 mb-2">
+                    <input id="calc-input" type="text" placeholder="輸入算式 (如 500+200)" class="flex-1 border-b border-gray-300 py-2 text-lg focus:outline-none">
+                    <button onclick="calculate()" class="px-4 py-2 btn-primary">=</button>
+                </div>
+                <div class="flex justify-between text-sm text-gray-500">
+                    <span>匯率設定: <input id="rate-setting" type="number" value="0.21" step="0.001" class="w-16 border-b text-center"></span>
+                    <span class="font-bold text-black text-lg">≈ NT$ <span id="twd-result">0</span></span>
+                </div>
+            </div>
 
-    <div class="muji-card p-5 bg-stone-50">
-        <div class="flex justify-between items-start mb-2">
-            <span class="text-xs font-medium text-stone-400">02.18 WED</span>
-            <span class="text-[0.6rem] border border-stone-300 px-1 text-stone-400">DAY 6</span>
-        </div>
-        <h2 class="text-base font-normal mb-3">築地 ➔ 歸賦</h2>
-        <ul class="text-sm space-y-2 text-stone-600">
-            <li>• 築地場外市場最後巡禮</li>
-            <li>• 12:00 抵達成田 (BR197)</li>
-        </ul>
-    </div>
+            <div class="flex gap-2 mb-6">
+                <button onclick="document.getElementById('img-upload').click()" class="flex-1 py-3 bg-white border border-gray-300 rounded text-sm shadow-sm">
+                    <i class="fa-solid fa-camera mr-2"></i>拍照記帳
+                </button>
+                <input type="file" id="img-upload" accept="image/*" capture="environment" class="hidden" onchange="handleImage(event)">
+            </div>
 
-    <footer class="mt-8 mb-12 text-center text-[0.65rem] text-stone-400">
-        <p>緊急聯絡 (駐日代表處): +81-3-3280-7811</p>
-        <p class="mt-1">MUJI STYLE TRAVEL APP v1.0</p>
-    </footer>
+            <h3 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest">Expense History</h3>
+            <div id="expense-list" class="space-y-2">
+                </div>
+        </section>
+
+        <section id="page-lists" class="page">
+            <div class="muji-card p-4 mb-6">
+                <h3 class="font-bold mb-4">行前準備</h3>
+                <div class="space-y-3" id="checklist">
+                    <label class="flex items-center gap-3 text-sm">
+                        <input type="checkbox" class="w-4 h-4 accent-red-800"> 護照 & 譯本 (自駕必備)
+                    </label>
+                    <label class="flex items-center gap-3 text-sm">
+                        <input type="checkbox" class="w-4 h-4 accent-red-800"> Visit Japan Web QR Code
+                    </label>
+                    <label class="flex items-center gap-3 text-sm">
+                        <input type="checkbox" class="w-4 h-4 accent-red-800"> 2歲童保暖衣物與推車
+                    </label>
+                </div>
+            </div>
+
+            <div class="muji-card p-4">
+                <h3 class="font-bold mb-2">個人備忘錄</h3>
+                <textarea id="memo-input" class="w-full h-32 p-3 text-sm bg-gray-50 rounded border-none focus:ring-1 focus:ring-gray-300" placeholder="輸入筆記內容，網址會自動轉換按鈕..." oninput="saveMemo()"></textarea>
+                <div id="memo-links" class="mt-2 flex flex-wrap gap-2"></div>
+            </div>
+        </section>
+
+        <section id="page-info" class="page">
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <a href="https://www.jma.go.jp/jma/index.html" class="muji-card p-4 text-center">
+                    <i class="fa-solid fa-cloud-sun text-xl mb-2 text-blue-400"></i>
+                    <p class="text-xs">日本氣象廳</p>
+                </a>
+                <a href="tel:+81332807811" class="muji-card p-4 text-center border-l-4 border-red-700">
+                    <i class="fa-solid fa-phone text-xl mb-2 text-red-700"></i>
+                    <p class="text-xs">代表處聯絡</p>
+                </a>
+            </div>
+            <div class="muji-card p-4">
+                <h3 class="font-bold mb-2 text-sm">旅遊須知</h3>
+                <ul class="text-xs text-gray-600 space-y-2 leading-relaxed">
+                    <li>• 日本室內全面禁菸，請至指定吸菸區。</li>
+                    <li>• 2月富士山山區氣溫可能低於 0°C，注意路面結冰。</li>
+                    <li>• 蔬食者於便利商店可尋找「塩おにぎり」(鹽味飯糰)。</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center py-3 px-2 z-50">
+        <button onclick="showPage('plan')" class="nav-btn flex flex-col items-center gap-1 text-gray-400 active" data-page="plan">
+            <i class="fa-solid fa-calendar-day text-lg"></i>
+            <span class="text-[10px]">PLAN</span>
+        </button>
+        <button onclick="showPage('guide')" class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-page="guide">
+            <i class="fa-solid fa-map-location-dot text-lg"></i>
+            <span class="text-[10px]">GUIDE</span>
+        </button>
+        <button onclick="showPage('wallet')" class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-page="wallet">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <span class="text-[10px]">WALLET</span>
+        </button>
+        <button onclick="showPage('lists')" class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-page="lists">
+            <i class="fa-solid fa-list-check text-lg"></i>
+            <span class="text-[10px]">LISTS</span>
+        </button>
+        <button onclick="showPage('info')" class="nav-btn flex flex-col items-center gap-1 text-gray-400" data-page="info">
+            <i class="fa-solid fa-circle-info text-lg"></i>
+            <span class="text-[10px]">INFO</span>
+        </button>
+    </nav>
+
+    <script>
+        // --- Page Navigation ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                if(btn.dataset.page === pageId) btn.classList.add('tab-active');
+            });
+            window.scrollTo(0, 0);
+        }
+
+        // --- Wallet Logic ---
+        function calculate() {
+            const input = document.getElementById('calc-input').value;
+            const rate = parseFloat(document.getElementById('rate-setting').value);
+            try {
+                // 安全評估簡單算式
+                const jpy = Function('"use strict";return (' + input + ')')();
+                const twd = Math.round(jpy * rate);
+                document.getElementById('twd-result').innerText = twd.toLocaleString();
+                return { jpy, twd };
+            } catch (e) {
+                alert("計算格式錯誤");
+                return null;
+            }
+        }
+
+        let expenses = JSON.parse(localStorage.getItem('trip_expenses') || '[]');
+
+        function handleImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Canvas 壓縮圖片
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const scale = 300 / img.width;
+                    canvas.width = 300;
+                    canvas.height = img.height * scale;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const base64 = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    saveExpense(base64);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveExpense(imgBase64) {
+            const res = calculate();
+            if (!res) return;
+
+            const item = {
+                id: Date.now(),
+                jpy: res.jpy,
+                twd: res.twd,
+                img: imgBase64,
+                time: new Date().toLocaleTimeString()
+            };
+            expenses.unshift(item);
+            localStorage.setItem('trip_expenses', JSON.stringify(expenses));
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            const container = document.getElementById('expense-list');
+            container.innerHTML = expenses.map(ex => `
+                <div class="muji-card p-3 flex items-center gap-3">
+                    <img src="${ex.img}" class="w-12 h-12 object-cover rounded">
+                    <div class="flex-1">
+                        <p class="text-sm font-bold">¥${ex.jpy.toLocaleString()}</p>
+                        <p class="text-[10px] text-gray-400">${ex.time}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs accent-text">NT$ ${ex.twd.toLocaleString()}</p>
+                        <button onclick="deleteExpense(${ex.id})" class="text-gray-300 text-xs mt-1">刪除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteExpense(id) {
+            expenses = expenses.filter(e => e.id !== id);
+            localStorage.setItem('trip_expenses', JSON.stringify(expenses));
+            renderExpenses();
+        }
+
+        // --- Memo Logic ---
+        function saveMemo() {
+            const text = document.getElementById('memo-input').value;
+            localStorage.setItem('trip_memo', text);
+            extractLinks(text);
+        }
+
+        function extractLinks(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const urls = text.match(urlRegex) || [];
+            const container = document.getElementById('memo-links');
+            container.innerHTML = urls.map(url => `
+                <a href="${url}" target="_blank" class="text-[10px] bg-gray-200 px-2 py-1 rounded-full text-gray-600">
+                    <i class="fa-solid fa-link mr-1"></i>開啟連結
+                </a>
+            `).join('');
+        }
+
+        // --- Init ---
+        window.onload = () => {
+            renderExpenses();
+            const savedMemo = localStorage.getItem('trip_memo') || '';
+            document.getElementById('memo-input').value = savedMemo;
+            extractLinks(savedMemo);
+            showPage('plan');
+        };
+    </script>
 </body>
 </html>
