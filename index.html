@@ -3,24 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>東京・箱根・富士 2026</title>
+    <title>東京・箱根・富士 2026 旅遊手冊</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Shippori+Mincho&display=swap" rel="stylesheet">
     <style>
-        :root { --muji-bg: #F5F5F3; --muji-dark: #333333; --muji-accent: #A62121; }
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: var(--muji-bg); color: var(--muji-dark); padding-bottom: 80px; }
-        h1, h2, .font-serif { font-family: 'Shippori Mincho', serif; }
-        .muji-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        :root {
+            --muji-bg: #F5F5F3;
+            --muji-text: #333333;
+            --muji-accent: #7F878F;
+            --muji-red: #8B0000;
+            --taxi-yellow: #FFD700;
+        }
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--muji-bg);
+            color: var(--muji-text);
+            margin-bottom: 70px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .muji-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid #EDEDED;
+            margin-bottom: 1rem;
+        }
         .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .nav-active { color: var(--muji-accent) !important; font-weight: 500; }
-        .timeline-line { position: absolute; left: 15px; top: 0; bottom: 0; width: 1px; background: #E5E7EB; z-index: 0; }
-        .timeline-dot { position: relative; z-index: 10; width: 8px; height: 8px; border-radius: 50%; background: #D1D5DB; border: 2px solid white; margin-left: 11px; }
-        .dot-important { background: var(--muji-accent); }
+        .page.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-active { color: var(--muji-red) !important; font-weight: 600; }
+        .taxi-tag { background: #FFF9E6; color: #856404; border: 1px solid #FFEEBA; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+        .green-car-tag { background: #E6F4EA; color: #1E7E34; border: 1px solid #CEEAD6; padding: 2px 6px; border-radius: 4px; font-size: 10px; }
+        .timeline-item { position: relative; padding-left: 24px; padding-bottom: 20px; border-left: 1px solid #E5E7EB; margin-left: 8px; }
+        .timeline-item::before { content: ''; position: absolute; left: -5px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--muji-accent); }
+        .important-item::before { background: var(--muji-red); box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1); }
     </style>
 </head>
 <body>
 
-    <header class="p-6 bg
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4">
+        <div class="flex justify-between items-end">
+            <div>
+                <p class="text-[10px] tracking-widest text-gray-400 uppercase">Feb 13 - Feb 18, 2026</p>
+                <h1 class="text-xl font-medium tracking-tighter" style="font-family: 'Shippori Mincho', serif;">東京・箱根・富士自駕</h1>
+            </div>
+            <div class="text-right">
+                <span id="header-date" class="text-xs font-medium text-red-900 bg-red-50 px-2 py-1 rounded">D1 02/13</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="p-5">
+        
+        <section id="page-plan" class="page active">
+            
+            <div class="mb-8">
+                <h2 class="text-sm font-bold mb-4 flex items-center gap-2">
+                    <span class="bg-black text-white px-2 py-0.5 rounded">D1</span> 抵達東京 & 淺草之夜
+                </h2>
+                <div class="muji-card p-5">
+                    <div class="timeline-item important-item">
+                        <p class="text-xs font-bold">12:25 | 成田機場 (BR184)</p>
+                        <p class="text-xs text-gray-500">第一航廈入境 (預計 13:30 完成)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold">13:30 | 京成電鐵 Skyliner</p>
+                        <p class="text-xs text-gray-500">B1 乘車 ➔ 京成上野 (41min)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold flex items-center gap-2">14:30 | 上野 ➔ 飯店 (湯島) <span class="taxi-tag"><i class="fa-solid fa-taxi"></i> ¥1,200</span></p>
+                        <p class="text-xs text-gray-500">大行李務必搭計程車 (約 10min)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold flex items-center gap-2">16:00 | 淺草雷門觀光 <span class="taxi-tag"><i class="fa-solid fa-taxi"></i> ¥1,800</span></p>
+                        <div class="mt-2 flex gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=淺草雷門" class="text-[10px] bg-gray-100 px-2 py-1 rounded">Google Map</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-sm font-bold mb-4 flex items-center gap-2">
+                    <span class="bg-black text-white px-2 py-0.5 rounded">D3</span> 箱根自駕開始
+                </h2>
+                <div class="muji-card p-5">
+                    <div class="timeline-item important-item">
+                        <p class="text-xs font-bold flex items-center gap-2">08:30 | 上野 ➔ 小田原 <span class="green-car-tag">Green Car</span></p>
+                        <p class="text-[10px] text-gray-500 italic">※月台購買 Green Car 券 (假日¥800)，推薦 2 樓座位。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold">10:00 | 小田原東口取車</p>
+                        <p class="text-xs text-gray-500">核對：駕照、譯本、保險細節。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold">10:30 | 箱根自駕遊</p>
+                        <p class="text-xs text-gray-500">箱根湯本 ➔ 大涌谷 ➔ 蘆之湖</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-sm font-bold mb-4 flex items-center gap-2">
+                    <span class="bg-red-800 text-white px-2 py-0.5 rounded">D4</span> 富士野生動物園
+                </h2>
+                <div class="muji-card p-5 border-l-4 border-red-800">
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold">09:30 | 抵達動物園 (自駕入園)</p>
+                        <p class="text-xs text-gray-500">導航：055-998-1311</p>
+                    </div>
+                    <div class="timeline-item important-item">
+                        <p class="text-xs font-bold text-red-700 underline">14:40 | 必須離園離開</p>
+                        <p class="text-xs text-gray-500">走東名高速避開箱根山路塞車</p>
+                    </div>
+                    <div class="timeline-item">
+                        <p class="text-xs font-bold">17:00 | 小田原還車</p>
+                        <p class="text-xs text-gray-500 italic">※記得先加滿油！小田原東口前有加油站。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-wallet" class="page">
+            <div class="muji-card p-5 mb-4">
+                <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Currency Converter</h3>
+                <div class="flex items-center gap-3 mb-4">
+                    <input id="calc-input" type="text" inputmode="decimal" placeholder="輸入金額 (如 1500+800)" class="flex-1 border-b border-gray-200 py-3 text-xl focus:outline-none">
+                    <button onclick="calculate()" class="bg-black text-white w-12 h-12 rounded-full shadow-lg"><i class="fa-solid fa-equals"></i></button>
+                </div>
+                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                    <span class="text-xs text-gray-500">匯率設定: <input id="rate-setting" type="number" value="0.21" step="0.001" class="bg-transparent border-b w-12 text-center focus:outline-none"></span>
+                    <span class="font-bold text-lg">≈ NT$ <span id="twd-result">0</span></span>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('img-upload').click()" class="w-full py-4 bg-white border border-gray-200 rounded-xl mb-6 shadow-sm text-sm font-medium">
+                <i class="fa-solid fa-camera-retro mr-2"></i>拍照記帳 (自動壓縮)
+            </button>
+            <input type="file" id="img-upload" accept="image/*" capture="environment" class="hidden" onchange="handleImage(event)">
+
+            <div id="expense-list" class="space-y-3">
+                </div>
+        </section>
+
+        <section id="page-lists" class="page">
+            <div class="muji-card p-5">
+                <h3 class="font-bold text-sm mb-4 border-b pb-2">自駕備忘錄</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 text-xs">
+                        <input type="checkbox" class="w-4 h-4 accent-red-800"> 台灣駕照正本 + 日文譯本
+                    </label>
+                    <label class="flex items-center gap-3 text-xs">
+                        <input type="checkbox" class="w-4 h-4 accent-red-800"> 確認租車是否含雪胎 (Studless Tire)
+                    </label>
+                    <label class="flex items-center gap-3 text-xs">
+                        <input type="checkbox" class="w-4 h-4 accent-red-800"> 準備好 Visit Japan Web QR Code
+                    </label>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <h3 class="font-bold text-sm mb-2 px-1">快速備忘 (自動儲存)</h3>
+                <textarea id="memo-input" class="w-full h-40 p-4 text-sm muji-card border-none focus:ring-1 focus:ring-gray-200" placeholder="貼上網址或紀錄隨想..." oninput="saveMemo()"></textarea>
+            </div>
+        </section>
+
+        <section id="page-info" class="page">
+            <div class="space-y-4">
+                <div class="muji-card p-5 bg-red-50/30 border-red-100">
+                    <h3 class="text-red-900 font-bold text-sm mb-3"><i class="fa-solid fa-triangle-exclamation mr-2"></i>緊急聯絡</h3>
+                    <p class="text-xs mb-1">駐日代表處: <a href="tel:+81332807811" class="underline">+81-3-3280-7811</a></p>
+                    <p class="text-xs">警察局: 110 / 救護車: 119</p>
+                </div>
+
+                <div class="muji-card p-5">
+                    <h3 class="font-bold text-sm mb-3">計程車攻略</h3>
+                    <p class="text-[11px] text-gray-600 leading-relaxed italic">
+                        ※ 推薦下載「GO」App 或是直接路邊攔車。<br>
+                        ※ 東京計程車起步價約 ¥500，3大1小短程移動絕對比地鐵划算。
+                    </p>
+                </div>
+                
+                <div class="muji-card p-5">
+                    <h3 class="font-bold text-sm mb-3">旅遊禁忌</h3>
+                    <ul class="text-[11px] text-gray-600 space-y-2">
+                        <li>• 餐廳內通常不能食用外食 (嬰兒食品除外)。</li>
+                        <li>• 乘車時請勿在車廂內講電話。</li>
+                        <li>• 手機拍照請關閉快門聲 (或注意禮貌)。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-100 flex justify-around items-center py-4 z-50">
+        <button onclick="showPage('plan')" class="nav-btn flex flex-col items-center gap-1 text-gray-300 tab-active" data-page="plan">
+            <i class="fa-solid fa-calendar-check text-lg"></i>
+            <span class="text-[9px] font-bold tracking-tighter">行程</span>
+        </button>
+        <button onclick="showPage('wallet')" class="nav-btn flex flex-col items-center gap-1 text-gray-300" data-page="wallet">
+            <i class="fa-solid fa-coins text-lg"></i>
+            <span class="text-[9px] font-bold tracking-tighter">記帳</span>
+        </button>
+        <button onclick="showPage('lists')" class="nav-btn flex flex-col items-center gap-1 text-gray-300" data-page="lists">
+            <i class="fa-solid fa-clipboard-list text-lg"></i>
+            <span class="text-[9px] font-bold tracking-tighter">清單</span>
+        </button>
+        <button onclick="showPage('info')" class="nav-btn flex flex-col items-center gap-1 text-gray-300" data-page="info">
+            <i class="fa-solid fa-info-circle text-lg"></i>
+            <span class="text-[9px] font-bold tracking-tighter">資訊</span>
+        </button>
+    </nav>
+
+    <script>
+        // 頁面切換
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                if(btn.dataset.page === pageId) btn.classList.add('tab-active');
+            });
+            window.scrollTo(0, 0);
+        }
+
+        // 記帳計算
+        function calculate() {
+            const input = document.getElementById('calc-input').value;
+            const rate = parseFloat(document.getElementById('rate-setting').value);
+            try {
+                const jpy = Function('"use strict";return (' + input + ')')();
+                const twd = Math.round(jpy * rate);
+                document.getElementById('twd-result').innerText = twd.toLocaleString();
+                return { jpy, twd };
+            } catch (e) {
+                alert("請輸入正確算式");
+                return null;
+            }
+        }
+
+        // 圖片處理與儲存
+        let expenses = JSON.parse(localStorage.getItem('trip_expenses_2026') || '[]');
+
+        function handleImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const max_w = 400;
+                    const scale = max_w / img.width;
+                    canvas.width = max_w;
+                    canvas.height = img.height * scale;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    saveExpense(canvas.toDataURL('image/jpeg', 0.6));
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function saveExpense(base64) {
+            const res = calculate();
+            if (!res) return;
+            const item = { id: Date.now(), jpy: res.jpy, twd: res.twd, img: base64, time: new Date().toLocaleDateString() };
+            expenses.unshift(item);
+            localStorage.setItem('trip_expenses_2026', JSON.stringify(expenses));
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            const container = document.getElementById('expense-list');
+            container.innerHTML = expenses.map(ex => `
+                <div class="muji-card p-3 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="${ex.img}" class="w-12 h-12 object-cover rounded-md shadow-sm">
+                        <div>
+                            <p class="text-sm font-bold">¥${ex.jpy.toLocaleString()}</p>
+                            <p class="text-[10px] text-gray-400">≈ NT$ ${ex.twd.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteExp(${ex.id})" class="text-xs text-gray-300">刪除</button>
+                </div>
+            `).join('');
+        }
+
+        function deleteExp(id) {
+            expenses = expenses.filter(e => e.id !== id);
+            localStorage.setItem('trip_expenses_2026', JSON.stringify(expenses));
+            renderExpenses();
+        }
+
+        // 備忘錄儲存
+        function saveMemo() {
+            localStorage.setItem('trip_memo_2026', document.getElementById('memo-input').value);
+        }
+
+        window.onload = () => {
+            renderExpenses();
+            document.getElementById('memo-input').value = localStorage.getItem('trip_memo_2026') || '';
+        };
+    </script>
+</body>
+</html>
