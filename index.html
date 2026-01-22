@@ -3,331 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 東京・箱根・富士 | 完整旅誌</title>
+    <title>Tokyo Trip 2026</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Shippori+Mincho&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config for Muji Style -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        muji: {
+                            bg: '#F5F5F3',      /* 米白背景 */
+                            card: '#FFFFFF',    /* 卡片白 */
+                            text: '#44403C',    /* 深灰字 (Stone-700) */
+                            sub: '#78716C',     /* 次要字 (Stone-500) */
+                            accent: '#7F1D1D',  /* 點綴紅 (接近印泥色) */
+                            border: '#E7E5E4',  /* 邊框 (Stone-200) */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        mono: ['"Roboto Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root { --muji-bg: #F5F5F3; --muji-text: #333333; --muji-red: #7F1D1D; }
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: var(--muji-bg); color: var(--muji-text); margin-bottom: 80px; }
-        .heading-mincho { font-family: 'Shippori Mincho', serif; }
-        .muji-card { background: white; border: 1px solid #E5E5E5; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
-        .tab-active { color: var(--muji-red) !important; font-weight: 500; border-top: 2px solid var(--muji-red); }
-        .page { display: none; } .page.active { display: block; animation: fadeIn 0.3s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .timeline-item { position: relative; border-left: 1px solid #D1D5DB; padding-left: 1.5rem; padding-bottom: 1.2rem; margin-left: 0.5rem; }
-        .timeline-item::before { content: ""; position: absolute; left: -5px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: #9CA3AF; }
-        .important-point::before { background: var(--muji-red); width: 11px; height: 11px; left: -6px; }
-        .taxi-tag { background: #FFFBEB; color: #92400E; border: 1px solid #FEF3C7; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
-        .vege-tag { background: #ECFDF5; color: #065F46; border: 1px solid #D1FAE5; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+        body {
+            background-color: #F5F5F3;
+            color: #44403C;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* 隱藏捲軸但保持功能 */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* 卡片按壓效果 */
+        .btn-press:active {
+            transform: scale(0.98);
+            background-color: #E7E5E4;
+        }
+        /* 載入動畫 */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body>
+<body class="flex flex-col h-screen overflow-hidden">
 
-    <header class="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-40">
-        <h1 class="heading-mincho text-xl tracking-widest font-medium text-red-950">2026 日本旅誌 (全)</h1>
-        <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-tighter">Tokyo / Hakone / Fuji Safari</p>
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-muji-border h-14 flex items-center justify-center fixed top-0 w-full z-50 shadow-sm">
+        <h1 class="text-lg font-bold tracking-widest text-muji-text">TOKYO 2026</h1>
     </header>
 
-    <main class="px-5 pt-6 pb-20">
-        
-        <section id="page-plan" class="page active">
-            
-            <div class="day-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="heading-mincho text-3xl text-red-900">01</span>
-                    <span class="text-xs font-bold">02/13 (五) 抵達東京 & 淺草</span>
-                </div>
-                <div class="muji-card p-4">
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">12:25 成田機場 BR184</h4>
-                        <p class="text-[10px] text-gray-400">第一航廈入境手續預計 1hr</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">13:30 Skyliner ➔ 京成上野</h4>
-                        <p class="text-[10px] text-gray-500">41min | 成人 ¥2,580</p>
-                    </div>
-                    <div class="timeline-item important-point">
-                        <h4 class="text-sm font-medium">14:30 抵達飯店 (湯島) <span class="taxi-tag">Taxi ¥1,200</span></h4>
-                        <p class="text-[10px] text-gray-400">從京成上野搭計程車最省力</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">16:00 淺草觀光 <span class="taxi-tag">Taxi ¥1,800</span></h4>
-                        <p class="text-[10px] text-gray-500">夜間淺草寺與晚餐 <span class="vege-tag">Vege: T's Tantan</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="day-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="heading-mincho text-3xl text-red-900">02</span>
-                    <span class="text-xs font-bold">02/14 (六) 秋葉原 & 太鼓</span>
-                </div>
-                <div class="muji-card p-4">
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">10:00 秋葉原 Yodobashi Akiba</h4>
-                        <p class="text-[10px] text-gray-500">步行12min或 <span class="taxi-tag">Taxi ¥800</span></p>
-                        <p class="text-[10px] text-gray-400 italic">6F 玩具區 / 8F 午餐</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">13:30 飯店午睡 <span class="taxi-tag">Taxi ¥800</span></h4>
-                        <p class="text-[10px] text-gray-400">小孩休息為重</p>
-                    </div>
-                    <div class="timeline-item important-point">
-                        <h4 class="text-sm font-medium">15:00 湯島天滿宮</h4>
-                        <p class="text-[10px] text-red-800 font-bold">觀賞白梅太鼓表演 (步行3-5min)</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">16:30 阿美橫丁補貨</h4>
-                        <p class="text-[10px] text-gray-500">沿春日通下坡步行10min</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="day-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="heading-mincho text-3xl text-red-900">03</span>
-                    <span class="text-xs font-bold">02/15 (日) 前往箱根</span>
-                </div>
-                <div class="muji-card p-4">
-                    <div class="timeline-item important-point">
-                        <h4 class="text-sm font-bold">08:30 上野 ➔ 小田原</h4>
-                        <p class="text-[10px] text-gray-600">JR 上野東京線 (Green Car)</p>
-                        <p class="text-[10px] bg-green-50 p-1 mt-1 rounded">※月台買券 (假日¥800) 座位舒適</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">10:00 小田原取車 (東口)</h4>
-                        <p class="text-[10px] text-gray-500">大涌谷 ➔ 蘆之湖自駕遊</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">16:30 仙石原飯店入住</h4>
-                        <p class="text-[10px] text-gray-400">箱根蔦屋旅館 (Check parking)</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="day-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="heading-mincho text-3xl text-red-900">04</span>
-                    <span class="text-xs font-bold">02/16 (一) 富士野生園</span>
-                </div>
-                <div class="muji-card p-4 border-l-4 border-red-900">
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">09:30 富士野生動物園</h4>
-                        <p class="text-[10px] text-gray-500 italic">私家車直接入園看獅子 (Navi: 055-998-1311)</p>
-                    </div>
-                    <div class="timeline-item important-point">
-                        <h4 class="text-sm font-bold text-red-800">14:40 務必離開園區</h4>
-                        <p class="text-[10px] text-gray-600">經東名高速回小田原，避開山路</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">17:00 還車 ➔ 晚餐 ➔ 回上野</h4>
-                        <p class="text-[10px] text-gray-500">JR Green Car (85min)</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="day-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="heading-mincho text-3xl text-red-900">05</span>
-                    <span class="text-xs font-bold">02/17 (二) TeamLab 藝術</span>
-                </div>
-                <div class="muji-card p-4">
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">10:00 TeamLab Planets <span class="taxi-tag">Taxi ¥4,000</span></h4>
-                        <p class="text-[10px] text-gray-500">方案 A：飯店直達豐洲 (3人分攤划算)</p>
-                        <p class="text-[10px] text-gray-400 italic">※需脫鞋入水，幫小孩多備衣物</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">12:30 LaLaport 豐洲</h4>
-                        <p class="text-[10px] text-gray-500">午餐 & 小孩放電區</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">16:00 秋葉原最終補貨</h4>
-                        <p class="text-[10px] text-gray-500">Radio Kaikan 等逛街</p>
-                        <p class="text-[10px] text-gray-500">回飯店 <span class="taxi-tag">Taxi ¥800</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="day-section">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="heading-mincho text-3xl text-red-900">06</span>
-                    <span class="text-xs font-bold">02/18 (三) 補貨 & 返家</span>
-                </div>
-                <div class="muji-card p-4">
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">10:30 多慶屋 (御徒町) <span class="taxi-tag">Taxi ¥800</span></h4>
-                        <p class="text-[10px] text-gray-500">紫色大樓最後掃貨</p>
-                    </div>
-                    <div class="timeline-item important-point">
-                        <h4 class="text-sm font-medium">11:40 往京成上野 <span class="taxi-tag">Taxi ¥800</span></h4>
-                        <p class="text-[10px] text-gray-400 italic">行李多，搭車最輕鬆</p>
-                    </div>
-                    <div class="timeline-item">
-                        <h4 class="text-sm font-medium">12:00 Skyliner ➔ 機場</h4>
-                        <p class="text-[10px] text-gray-500">12:45 抵達 NRT 報到 (BR197 14:00起飛)</p>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <section id="page-wallet" class="page">
-            <h2 class="heading-mincho text-xl mb-6">即時換算與記帳</h2>
-            <div class="muji-card p-5 mb-8">
-                <div class="flex items-center gap-3">
-                    <input id="calc-input" type="text" placeholder="1500+800" class="flex-1 border-b py-2 text-lg bg-transparent focus:outline-none">
-                    <button onclick="runCalculator()" class="w-10 h-10 bg-black text-white rounded-full">=</button>
-                </div>
-                <div class="mt-4 text-right">
-                    <p class="text-xs text-gray-400">匯率 0.21 | NT$ <span id="twd-output" class="text-2xl text-red-900">0</span></p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-2 mb-4">
-                <button onclick="triggerCamera()" class="py-3 border border-gray-300 text-xs rounded"><i class="fa-solid fa-camera mr-1"></i>上傳單據</button>
-                <button onclick="addExpense()" class="py-3 bg-red-900 text-white text-xs rounded shadow-md">新增紀錄</button>
-            </div>
-            <input type="file" id="camera-input" class="hidden" onchange="processImage(event)">
-            <canvas id="img-canvas" class="hidden"></canvas>
-            <div id="expense-list" class="space-y-3 mt-6"></div>
-        </section>
-
-        <section id="page-lists" class="page">
-            <h2 class="heading-mincho text-xl mb-6">備忘與清單</h2>
-            <div class="muji-card p-5 mb-6">
-                <textarea id="memo-input" class="w-full h-40 text-sm focus:outline-none" placeholder="輸入網址將自動識別為按鈕..." oninput="autoSaveMemo()"></textarea>
-                <div id="memo-buttons" class="flex flex-wrap gap-2 mt-4"></div>
-            </div>
-            <div class="muji-card p-5">
-                <h3 class="font-bold text-xs mb-3">行前 Check</h3>
-                <div class="space-y-2 text-xs">
-                    <label class="flex items-center gap-2"><input type="checkbox"> 台灣駕照 + 日文譯本</label>
-                    <label class="flex items-center gap-2"><input type="checkbox"> 2.5 歲童常備藥品</label>
-                    <label class="flex items-center gap-2"><input type="checkbox"> 雪胎 (Studless Tire) 確認</label>
-                </div>
-            </div>
-        </section>
-
-        <section id="page-info" class="page">
-            <h2 class="heading-mincho text-xl mb-6">重要資訊</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <a href="https://www.jma.go.jp/" target="_blank" class="muji-card p-5 text-center">
-                    <i class="fa-solid fa-cloud-sun text-2xl text-blue-400 mb-2"></i><p class="text-[10px]">日本氣象廳</p>
-                </a>
-                <a href="tel:+81332807811" class="muji-card p-5 text-center border-l-4 border-red-800">
-                    <i class="fa-solid fa-phone text-2xl text-red-800 mb-2"></i><p class="text-[10px]">駐日處電話</p>
-                </a>
-            </div>
-            <div class="muji-card p-5 mt-6 bg-red-50/50">
-                <h3 class="font-bold text-xs mb-2 text-red-900">計程車提醒</h3>
-                <p class="text-[11px] leading-relaxed italic">東京市區短程 (1-3km) 費用約 ¥1,000~¥2,500，3大1小分攤下來非常划算，且能避開所有樓梯，保護推車與體力。</p>
-            </div>
-        </section>
-
+    <!-- Main Content Area -->
+    <main id="main-container" class="flex-1 overflow-y-auto pt-16 pb-24 px-4 hide-scrollbar">
+        <!-- Content will be injected here by JavaScript -->
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex justify-around py-4 z-50">
-        <button onclick="showPage('plan')" class="nav-item flex flex-col items-center gap-1 text-gray-300 tab-active" data-page="plan">
-            <i class="fa-solid fa-calendar-day"></i><span class="text-[9px]">PLAN</span>
+    <!-- Bottom Navigation -->
+    <nav class="bg-white border-t border-muji-border h-16 fixed bottom-0 w-full z-50 flex justify-around items-center shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
+        <button onclick="router('plan')" class="nav-btn flex flex-col items-center gap-1 w-full h-full justify-center text-muji-sub hover:text-muji-text transition-colors" data-target="plan">
+            <i class="fa-regular fa-calendar-check text-lg"></i>
+            <span class="text-[10px] font-medium tracking-wide">PLAN</span>
         </button>
-        <button onclick="showPage('wallet')" class="nav-item flex flex-col items-center gap-1 text-gray-300" data-page="wallet">
-            <i class="fa-solid fa-wallet"></i><span class="text-[9px]">WALLET</span>
+        <button onclick="router('guide')" class="nav-btn flex flex-col items-center gap-1 w-full h-full justify-center text-muji-sub hover:text-muji-text transition-colors" data-target="guide">
+            <i class="fa-solid fa-book-open text-lg"></i>
+            <span class="text-[10px] font-medium tracking-wide">GUIDE</span>
         </button>
-        <button onclick="showPage('lists')" class="nav-item flex flex-col items-center gap-1 text-gray-300" data-page="lists">
-            <i class="fa-solid fa-list-check"></i><span class="text-[9px]">LISTS</span>
+        <button onclick="router('wallet')" class="nav-btn flex flex-col items-center gap-1 w-full h-full justify-center text-muji-sub hover:text-muji-text transition-colors" data-target="wallet">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <span class="text-[10px] font-medium tracking-wide">WALLET</span>
         </button>
-        <button onclick="showPage('info')" class="nav-item flex flex-col items-center gap-1 text-gray-300" data-page="info">
-            <i class="fa-solid fa-circle-info"></i><span class="text-[9px]">INFO</span>
+        <button onclick="router('lists')" class="nav-btn flex flex-col items-center gap-1 w-full h-full justify-center text-muji-sub hover:text-muji-text transition-colors" data-target="lists">
+            <i class="fa-solid fa-list-check text-lg"></i>
+            <span class="text-[10px] font-medium tracking-wide">LISTS</span>
+        </button>
+        <button onclick="router('info')" class="nav-btn flex flex-col items-center gap-1 w-full h-full justify-center text-muji-sub hover:text-muji-text transition-colors" data-target="info">
+            <i class="fa-solid fa-circle-info text-lg"></i>
+            <span class="text-[10px] font-medium tracking-wide">INFO</span>
         </button>
     </nav>
 
+    <!-- JavaScript Logic -->
     <script>
-        // 頁面切換
-        function showPage(pId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + pId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(b => {
-                b.classList.remove('tab-active');
-                if(b.dataset.page === pId) b.classList.add('tab-active');
-            });
-            window.scrollTo(0,0);
+        // --- Data: Itinerary ---
+        const tripData = [
+            {
+                day: "D1", date: "02/13 (五)", title: "抵達東京 & 淺草之夜", stay: "Star House Ueno Tokyo",
+                events: [
+                    { time: "12:25", icon: "fa-plane-arrival", title: "抵達 成田機場 (NRT) 第一航廈", desc: "BR184 | 入境約1hr", map: "成田國際機場 第一航廈" },
+                    { time: "13:30", icon: "fa-train", title: "Skyliner 往上野", desc: "B1層搭乘 | 41分 | ¥2,580/人", map: "成田機場站" },
+                    { time: "14:30", icon: "fa-taxi", title: "前往飯店 Check-in", desc: "京成上野站搭計程車 | 約¥1,200", map: "京成上野站" },
+                    { time: "15:00", icon: "fa-bed", title: "飯店: Star House", desc: "放行李、休息", map: "Star House Ueno Tokyo", link: "https://www.booking.com/hotel/jp/star-house.zh-tw.html" },
+                    { time: "15:30", icon: "fa-taxi", title: "前往淺草雷門", desc: "計程車 | 約¥1,800 | 15分", map: "雷門" },
+                    { time: "16:00", icon: "fa-camera", title: "淺草觀光 & 晚餐", desc: "仲見世通、淺草寺", map: "淺草寺" },
+                    { time: "20:00", icon: "fa-taxi", title: "回飯店", desc: "計程車 | 約¥1,800", map: "Star House Ueno Tokyo" }
+                ]
+            },
+            {
+                day: "D2", date: "02/14 (六)", title: "秋葉原玩具 & 湯島太鼓", stay: "Star House Ueno Tokyo",
+                events: [
+                    { time: "09:30", icon: "fa-person-walking", title: "前往秋葉原", desc: "步行12分 或 計程車(起步價)", map: "秋葉原" },
+                    { time: "10:00", icon: "fa-gamepad", title: "Yodobashi Akiba", desc: "6F玩具、8F午餐", map: "Yodobashi Akiba" },
+                    { time: "13:30", icon: "fa-taxi", title: "回飯店午睡", desc: "計程車 | ¥800", map: "Star House Ueno Tokyo" },
+                    { time: "15:00", icon: "fa-drum", title: "湯島天滿宮 (白梅太鼓)", desc: "步行3分鐘", map: "湯島天滿宮" },
+                    { time: "16:30", icon: "fa-person-walking", title: "散步至阿美橫丁", desc: "沿春日通下坡 | 10分", map: "阿美橫丁" },
+                    { time: "18:00", icon: "fa-utensils", title: "晚餐 & 回飯店", desc: "上野周邊", map: "上野站" }
+                ]
+            },
+            {
+                day: "D3", date: "02/15 (日)", title: "前往箱根 (自駕開始)", stay: "Sengokuhara Onsen Hotel",
+                events: [
+                    { time: "08:30", icon: "fa-train", title: "前往小田原站", desc: "JR上野東京線 (Green Car) | 85分 | ¥2,318", map: "上野站" },
+                    { time: "10:00", icon: "fa-car", title: "小田原站東口 取車", desc: "出站依指引前往", map: "小田原站東口" },
+                    { time: "10:30", icon: "fa-road", title: "自駕遊箱根", desc: "箱根湯本(午餐) -> 大涌谷 -> 蘆之湖", map: "箱根湯本" },
+                    { time: "14:00", icon: "fa-mountain", title: "大涌谷", desc: "看黑蛋、富士山", map: "大涌谷" },
+                    { time: "15:30", icon: "fa-ship", title: "蘆之湖 (桃源台)", desc: "海盜船港口拍照", map: "桃源台港" },
+                    { time: "16:30", icon: "fa-hotel", title: "飯店 Check-in", desc: "確認停車位", map: "Sengokuhara Onsen Hotel" }
+                ]
+            },
+            {
+                day: "D4", date: "02/16 (一)", title: "富士野生動物園 (重點日)", stay: "Star House Ueno Tokyo",
+                events: [
+                    { time: "08:30", icon: "fa-car", title: "出發", desc: "經國道138 (乙女峠) | 50分山路", map: "Fuji Safari Park" },
+                    { time: "09:30", icon: "fa-paw", title: "富士野生動物園", desc: "遊玩+午餐 | ⚠️14:40前離開", map: "Fuji Safari Park" },
+                    { time: "14:40", icon: "fa-road", title: "返回小田原", desc: "走東名高速 (裾野IC -> 大井松田IC) | 75分", map: "小田原站" },
+                    { time: "16:30", icon: "fa-gas-pump", title: "加油 & 還車", desc: "滿油還車 | 小田原站東口", map: "小田原站東口" },
+                    { time: "17:30", icon: "fa-utensils", title: "晚餐", desc: "Minaka 美食街", map: "Minaka Odawara" },
+                    { time: "19:00", icon: "fa-train", title: "回上野", desc: "JR上野東京線 (Green Car)", map: "上野站" },
+                    { time: "20:30", icon: "fa-taxi", title: "回飯店", desc: "計程車", map: "Star House Ueno Tokyo" }
+                ]
+            },
+            {
+                day: "D5", date: "02/17 (二)", title: "TeamLab & 秋葉原", stay: "Star House Ueno Tokyo",
+                events: [
+                    { time: "09:00", icon: "fa-taxi", title: "前往豐洲 TeamLab", desc: "計程車推薦 | ¥3500 | 25分", map: "teamLab Planets TOKYO" },
+                    { time: "10:00", icon: "fa-star", title: "TeamLab 體驗", desc: "赤腳體驗藝術", map: "teamLab Planets TOKYO" },
+                    { time: "12:30", icon: "fa-store", title: "LaLaport 豐洲", desc: "午餐 & 放電", map: "Urban Dock LaLaport Toyosu" },
+                    { time: "15:30", icon: "fa-train-subway", title: "前往秋葉原", desc: "地鐵有樂町線 -> JR山手線", map: "秋葉原站" },
+                    { time: "16:00", icon: "fa-bag-shopping", title: "秋葉原逛街", desc: "Radio Kaikan 等", map: "Akihabara Radio Kaikan" },
+                    { time: "20:00", icon: "fa-person-walking", title: "回飯店", desc: "步行15分 或 計程車", map: "Star House Ueno Tokyo" }
+                ]
+            },
+            {
+                day: "D6", date: "02/18 (三)", title: "補貨 & 返家", stay: "溫暖的家",
+                events: [
+                    { time: "10:00", icon: "fa-suitcase", title: "退房", desc: "行李帶上車", map: "Star House Ueno Tokyo" },
+                    { time: "10:15", icon: "fa-taxi", title: "前往多慶屋", desc: "計程車直達門口", map: "多慶屋御徒町本店" },
+                    { time: "11:40", icon: "fa-taxi", title: "前往京成上野站", desc: "計程車", map: "京成上野站" },
+                    { time: "12:00", icon: "fa-train", title: "Skyliner 往機場", desc: "41分鐘", map: "成田國際機場" },
+                    { time: "12:45", icon: "fa-plane-departure", title: "機場報到", desc: "BR197 (14:00起飛)", map: "成田國際機場 第一航廈" }
+                ]
+            }
+        ];
+
+        // --- Helper: Generate Google Maps Link ---
+        function getMapLink(query, text) {
+            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+            return `<a href="${url}" target="_blank" class="text-muji-sub hover:text-muji-accent underline decoration-dotted underline-offset-2 transition-colors" onclick="event.stopPropagation();"><i class="fa-solid fa-location-dot mr-1"></i>${text}</a>`;
         }
 
-        // 記帳與匯率
-        let rate = 0.21;
-        let thumb = "";
-        function runCalculator() {
-            try { 
-                let res = eval(document.getElementById('calc-input').value);
-                document.getElementById('twd-output').innerText = Math.round(res * rate).toLocaleString();
-                return res;
-            } catch(e) { alert("算式錯誤"); return 0; }
-        }
+        // --- Render Functions ---
 
-        function triggerCamera() { document.getElementById('camera-input').click(); }
-        function processImage(e) {
-            const f = e.target.files[0];
-            const r = new FileReader();
-            r.onload = function(ev) {
-                const i = new Image();
-                i.onload = function() {
-                    const c = document.getElementById('img-canvas');
-                    const ctx = c.getContext('2d');
-                    const sc = 200 / i.width;
-                    c.width = 200; c.height = i.height * sc;
-                    ctx.drawImage(i, 0, 0, 200, c.height);
-                    thumb = c.toDataURL('image/jpeg', 0.5);
-                    alert("單據拍照成功");
-                };
-                i.src = ev.target.result;
-            };
-            r.readAsDataURL(f);
-        }
-
-        function addExpense() {
-            const jpy = runCalculator();
-            if(jpy === 0) return;
-            const log = { id: Date.now(), jpy, twd: Math.round(jpy*rate), img: thumb, time: new Date().toLocaleTimeString() };
-            let history = JSON.parse(localStorage.getItem('trip_v2') || '[]');
-            history.unshift(log);
-            localStorage.setItem('trip_v2', JSON.stringify(history));
-            thumb = ""; renderExpenses();
-        }
-
-        function renderExpenses() {
-            const h = JSON.parse(localStorage.getItem('trip_v2') || '[]');
-            document.getElementById('expense-list').innerHTML = h.map(i => `
-                <div class="muji-card p-3 flex justify-between items-center text-xs">
-                    <div class="flex items-center gap-2">
-                        ${i.img ? `<img src="${i.img}" class="w-10 h-10 object-cover rounded">` : `<div class="w-10 h-10 bg-gray-100"></div>`}
-                        <div><p class="font-bold">¥${i.jpy.toLocaleString()}</p><p class="text-[10px] text-gray-400">${i.time}</p></div>
+        function renderPlan() {
+            let html = `
+                <div class="mb-4 bg-yellow-50 border border-yellow-200 p-3 rounded-md text-xs text-yellow-800 flex items-start gap-2">
+                    <i class="fa-solid fa-lightbulb mt-0.5"></i>
+                    <div>
+                        <strong>交通策略：</strong> 市區短程請愛用「計程車」；前往小田原請搭 JR「Green Car」(免預約、舒適)；箱根山區「自駕」最靈活。
                     </div>
-                    <div class="text-right"><p class="text-red-900">NT$ ${i.twd.toLocaleString()}</p><button onclick="delEx(${i.id})" class="text-[9px] text-gray-300">刪除</button></div>
                 </div>
-            `).join('');
+                <div class="mb-4 text-center">
+                    <a href="https://www.gotokyo.org/book/actibook/AO_2503_vege_EN/?detailFlg=0" target="_blank" class="inline-block bg-green-700 text-white px-4 py-2 rounded-full text-xs shadow-md">
+                        <i class="fa-solid fa-leaf mr-1"></i> 東京蔬食友善指南 (電子書)
+                    </a>
+                </div>
+            `;
+            
+            tripData.forEach((day, index) => {
+                html += `
+                    <div class="bg-white rounded-lg shadow-sm border border-muji-border mb-6 overflow-hidden fade-in" style="animation-delay: ${index * 0.05}s">
+                        <div class="bg-muji-bg p-3 border-b border-muji-border flex justify-between items-center">
+                            <div>
+                                <span class="font-mono text-xl font-bold text-muji-text mr-2">${day.day}</span>
+                                <span class="text-sm text-muji-sub font-medium">${day.date}</span>
+                            </div>
+                            <span class="text-xs bg-white border border-muji-border px-2 py-1 rounded text-muji-sub">${day.stay.split(' ')[0]}</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-4 text-muji-text">${day.title}</h3>
+                            <div class="relative border-l-2 border-muji-border ml-2 space-y-6 pb-2">
+                                ${day.events.map(e => `
+                                    <div class="ml-6 relative">
+                                        <div class="absolute -left-[31px] bg-white border-2 border-muji-border rounded-full w-8 h-8 flex items-center justify-center text-muji-sub text-xs">
+                                            <i class="fa-solid ${e.icon}"></i>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-mono text-xs text-muji-accent font-bold">${e.time}</span>
+                                            <span class="font-medium text-sm text-muji-text">${e.title}</span>
+                                            <span class="text-xs text-muji-sub mt-1">${e.desc}</span>
+                                            <div class="mt-1 text-xs">
+                                                ${getMapLink(e.map, e.map)}
+                                                ${e.link ? `<span class="mx-1">|</span> <a href="${e.link}" target="_blank" class="text-blue-600 hover:underline">連結</a>` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
         }
 
-        function delEx(id) {
-            let h = JSON.parse(localStorage.getItem('trip_v2') || '[]').filter(i => i.id !== id);
-            localStorage.setItem('trip_v2', JSON.stringify(h)); renderExpenses();
+        function renderGuide() {
+            return `
+                <div class="space-y-6 fade-in">
+                    <!-- Intro Card -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-muji-border">
+                        <h2 class="font-serif text-2xl mb-2 text-muji-text">箱根 HAKONE</h2>
+                        <p class="text-sm text-muji-sub leading-relaxed mb-4">
+                            自江戶時代起便是知名的溫泉療養地。箱根位於富士箱根伊豆國立公園內，以壯觀的富士山景色、大涌谷的火山地貌以及蘆之湖的湖光山色聞名。
+                        </p>
+                        <div class="w-full h-48 bg-gray-200 rounded overflow-hidden">
+                             <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=138.9800,35.2000,139.0500,35.2500&layer=mapnik"></iframe>
+                        </div>
+                        <div class="mt-2 text-right">
+                             <a href="https://www.google.com/maps/search/?api=1&query=Hakone" target="_blank" class="text-xs text-muji-accent underline">開啟 Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-muji-border">
+                        <h2 class="font-serif text-2xl mb-2 text-muji-text">淺草 ASAKUSA</h2>
+                        <p class="text-sm text-muji-sub leading-relaxed">
+                            東京最古老的寺廟——淺草寺的所在地。雷門的大燈籠是東京的象徵。這裡保留了江戶下町的氛圍。
+                            <br><br>
+                            <strong>冷知識：</strong> 淺草寺籤詩以「兇」多聞名，據說抽到兇不用太難過，代表運氣即將觸底反彈。
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-muji-border">
+                        <h2 class="font-serif text-xl mb-2 text-muji-text">TeamLab Planets</h2>
+                        <p class="text-sm text-muji-sub leading-relaxed">
+                            「身臨其境」的藝術展。這裡要求赤腳進入，甚至會走過水中，請穿著方便捲起褲管的褲子。
+                        </p>
+                         <div class="mt-4 p-3 bg-stone-50 rounded text-xs">
+                             <a href="https://www.gotokyo.org/book/actibook/AO_2503_vege_EN/?detailFlg=0" target="_blank" class="flex items-center gap-2 text-green-700 font-bold">
+                                <i class="fa-solid fa-book"></i>
+                                <span>點此閱讀：東京蔬食餐廳指南</span>
+                             </a>
+                         </div>
+                    </div>
+                </div>
+            `;
         }
 
-        // 備忘錄
-        function autoSaveMemo() {
-            const val = document.getElementById('memo-input').value;
-            localStorage.setItem('trip_memo_v2', val);
-            const urls = val.match(/(https?:\/\/[^\s]+)/g) || [];
-            document.getElementById('memo-buttons').innerHTML = urls.map(u => `<a href="${u}" target="_blank" class="px-2 py-1 bg-gray-100 rounded text-[10px]">開啟網址</a>`).join('');
-        }
+        function renderWallet() {
+            // LocalStorage Keys
+            const LS_EXPENSE_KEY = 'tokyo_expenses';
+            const expenses = JSON.parse(localStorage.getItem(LS_EXPENSE_KEY)) || [];
+            const exchangeRate = 0.22; // 簡單範例，可設為變數
 
-        window.onload = () => {
-            renderExpenses();
-            const m = localStorage.getItem('trip_memo_v2') || '';
-            document.getElementById('memo-input').value = m;
-            autoSaveMemo();
-        };
-    </script>
-</body>
-</html>
+            // Helper to save
+            window.saveExpense = async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const item = form.item.value;
+                const cost = parseFloat(form.cost.value);
+                const file = form.photo.files[0];
+
+                let photoData = null;
+                if (file) {
+                    try {
+                        photoData = await compressImage(file);
+                    } catch (err) {
+                        alert("圖片處理失敗");
+                    }
+                }
+
+                const newExpense = {
+                    id: Date.now(),
+                    item,
+                    cost,
+                    photo: photoData,
+                    date: new Date().toLocaleString()
+                };
+
+                expenses.unshift(newExpense);
+                localStorage.setItem(LS_EXPENSE_KEY, JSON.stringify(expenses));
+                form.reset();
+                renderWalletUI(); // Re-render
+            };
+
+            // Image Compression
+            function compressImage(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (event) => {
