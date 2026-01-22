@@ -120,4 +120,307 @@
                         <h4 class="text-sm font-bold text-red-900">08:30 上野站出發</h4>
                         <p class="text-[10px] text-gray-600">JR 上野東京線 (往小田原)</p>
                         <p class="text-[10px] bg-green-50 text-green-800 p-1 mt-1 rounded">強烈建議加購 Green Car 券 (¥800/人)</p>
-                        <p class="text-[10px] mt-1 font-bold">總費用：約 ¥2,318 |
+                        <p class="text-[10px] mt-1 font-bold">總費用：約 ¥2,318 | 85min</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4 class="text-sm font-medium">10:00 小田原東口取車</h4>
+                        <p class="text-[10px] text-gray-500">開始自駕：大涌谷 ➔ 蘆之湖</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="heading-mincho text-3xl font-light text-red-900">04</span>
+                    <div class="h-[1px] flex-1 bg-gray-200"></div>
+                    <span class="text-xs text-gray-400">02/16 (一) 富士野生園</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="timeline-item">
+                        <h4 class="text-sm font-medium">09:30 富士野生動物園</h4>
+                        <p class="text-[10px] text-gray-500">山路 50min | 導航: 055-998-1311</p>
+                    </div>
+                    <div class="timeline-item important-point">
+                        <h4 class="text-sm font-bold text-red-800 underline">14:40 務必離園</h4>
+                        <p class="text-[10px] text-gray-500">避開回程塞車，經東名高速回小田原</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-guide" class="page">
+            <h2 class="heading-mincho text-xl mb-6">重點導覽</h2>
+            
+            <div class="muji-card p-5 mb-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-bold border-b-2 border-red-900">富士野生動物園</h3>
+                    <span class="text-[10px] bg-gray-100 px-2 py-1">Fuji Safari Park</span>
+                </div>
+                <p class="text-xs text-gray-600 leading-relaxed mb-4">
+                    日本最大的野生動物園，最大的特色是可以**開著租來的私家車**直接進入「草食/肉食動物區」。
+                    <br><br>
+                    <span class="font-bold text-gray-800">💡 冷知識：</span>
+                    冬天動物園常有積雪，開車進入能邊吹暖氣邊看獅子，是帶 2 歲小孩最輕鬆的動物園方案。
+                </p>
+                <iframe width="100%" height="200" class="rounded border" src="https://www.openstreetmap.org/export/embed.html?bbox=138.835%2C35.255%2C138.855%2C35.275&layer=mapnik"></iframe>
+            </div>
+
+            <div class="muji-card p-4">
+                <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">Vege Guide</h4>
+                <p class="text-[11px] mb-3">官方蔬食友善指南 (PDF)</p>
+                <a href="https://www.gotokyo.org/book/actibook/AO_2503_vege_EN/?detailFlg=0" target="_blank" class="block w-full text-center py-2 bg-stone-200 text-xs rounded hover:bg-stone-300">
+                    打開官方手冊 <i class="fa-solid fa-up-right-from-square ml-1"></i>
+                </a>
+            </div>
+        </section>
+
+        <section id="page-wallet" class="page">
+            <h2 class="heading-mincho text-xl mb-6">記帳與換算</h2>
+            
+            <div class="muji-card p-5 mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Rate Calculator</span>
+                    <span class="text-[10px] text-gray-400">當前匯率：0.21 (Google 參考)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <input id="calc-input" type="text" placeholder="輸入日幣算式 (如 500+200*3)" class="flex-1 border-b py-2 text-lg font-light bg-transparent">
+                    <button onclick="runCalculator()" class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-equals"></i>
+                    </button>
+                </div>
+                <div class="mt-4 text-right">
+                    <p class="text-xs text-gray-400">換算台幣</p>
+                    <p class="text-2xl font-light text-red-900">NT$ <span id="twd-output">0</span></p>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <input id="expense-note" type="text" placeholder="品項名稱" class="muji-card p-3 text-sm focus:border-red-900">
+                    <input id="expense-jpy" type="number" placeholder="日幣金額" class="muji-card p-3 text-sm focus:border-red-900">
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="triggerCamera()" class="flex-1 py-3 border border-gray-300 text-xs rounded flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-camera text-gray-400"></i> 上傳單據
+                    </button>
+                    <button onclick="addExpense()" class="flex-1 py-3 bg-red-900 text-white text-xs rounded shadow-md">
+                        新增紀錄
+                    </button>
+                </div>
+                <input type="file" id="camera-input" accept="image/*" class="hidden" onchange="processImage(event)">
+                <canvas id="img-canvas" class="hidden"></canvas>
+            </div>
+
+            <div class="space-y-3" id="expense-list">
+                </div>
+        </section>
+
+        <section id="page-lists" class="page">
+            <h2 class="heading-mincho text-xl mb-6">行前清單</h2>
+            
+            <div class="muji-card p-6 mb-8">
+                <div id="checklist" class="space-y-4">
+                    <label class="flex items-center gap-3 text-sm group">
+                        <input type="checkbox" class="w-4 h-4 accent-red-900"> 台灣駕照正本 + 日文譯本 (自駕必備)
+                    </label>
+                    <label class="flex items-center gap-3 text-sm group">
+                        <input type="checkbox" class="w-4 h-4 accent-red-900"> Visit Japan Web QR Code
+                    </label>
+                    <label class="flex items-center gap-3 text-sm group">
+                        <input type="checkbox" class="w-4 h-4 accent-red-900"> 輕量型嬰兒推車 (搭 Taxi 才方便)
+                    </label>
+                    <label class="flex items-center gap-3 text-sm group">
+                        <input type="checkbox" class="w-4 h-4 accent-red-900"> 箱根租車雪胎確認
+                    </label>
+                </div>
+            </div>
+
+            <h3 class="heading-mincho text-lg mb-4">個人備忘錄</h3>
+            <textarea id="memo-input" class="w-full h-40 p-4 muji-card text-sm mb-2" placeholder="輸入網址將自動轉化為按鈕..."></textarea>
+            <div id="memo-buttons" class="flex flex-wrap gap-2 mb-4"></div>
+            <button onclick="saveMemo()" class="w-full py-3 bg-stone-700 text-white text-xs rounded">儲存備忘錄</button>
+        </section>
+
+        <section id="page-info" class="page">
+            <h2 class="heading-mincho text-xl mb-6">基本資訊</h2>
+            
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <a href="https://www.jma.go.jp/" class="muji-card p-5 text-center">
+                    <i class="fa-solid fa-cloud-sun text-2xl mb-2 text-blue-400"></i>
+                    <p class="text-xs">日本氣象廳</p>
+                </a>
+                <a href="tel:+81332807811" class="muji-card p-5 text-center border-l-4 border-red-800">
+                    <i class="fa-solid fa-phone text-2xl mb-2 text-red-800"></i>
+                    <p class="text-xs">駐日處電話</p>
+                </a>
+            </div>
+
+            <div class="muji-card p-5">
+                <h3 class="font-bold text-xs uppercase tracking-tighter mb-4 text-gray-400">Emergency & Etiquette</h3>
+                <ul class="text-xs space-y-3 text-gray-600">
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-800">•</span> 警消：警察 110 / 救護車 119
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-800">•</span> 禁忌：出入境切勿帶肉製品、鮮果。
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-800">•</span> 禮儀：地鐵推車雖被允許，但尖峰時段建議收折以策安全。
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-100 px-2 py-3 z-50 flex justify-around">
+        <button onclick="showPage('plan')" class="nav-item flex flex-col items-center gap-1 px-3 text-gray-300 tab-active" data-page="plan">
+            <i class="fa-solid fa-calendar-day text-lg"></i>
+            <span class="text-[9px] font-medium tracking-tighter">PLAN</span>
+        </button>
+        <button onclick="showPage('guide')" class="nav-item flex flex-col items-center gap-1 px-3 text-gray-300" data-page="guide">
+            <i class="fa-solid fa-map-location text-lg"></i>
+            <span class="text-[9px] font-medium tracking-tighter">GUIDE</span>
+        </button>
+        <button onclick="showPage('wallet')" class="nav-item flex flex-col items-center gap-1 px-3 text-gray-300" data-page="wallet">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <span class="text-[9px] font-medium tracking-tighter">WALLET</span>
+        </button>
+        <button onclick="showPage('lists')" class="nav-item flex flex-col items-center gap-1 px-3 text-gray-300" data-page="lists">
+            <i class="fa-solid fa-list-check text-lg"></i>
+            <span class="text-[9px] font-medium tracking-tighter">LISTS</span>
+        </button>
+        <button onclick="showPage('info')" class="nav-item flex flex-col items-center gap-1 px-3 text-gray-300" data-page="info">
+            <i class="fa-solid fa-circle-info text-lg"></i>
+            <span class="text-[9px] font-medium tracking-tighter">INFO</span>
+        </button>
+    </nav>
+
+    <script>
+        // --- Navigation ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('tab-active');
+                if(btn.dataset.page === pageId) btn.classList.add('tab-active');
+            });
+            window.scrollTo(0, 0);
+        }
+
+        // --- Wallet Logic ---
+        let rate = 0.21;
+        let currentThumbnail = "";
+
+        function runCalculator() {
+            const exp = document.getElementById('calc-input').value;
+            try {
+                const res = eval(exp);
+                document.getElementById('twd-output').innerText = Math.round(res * rate).toLocaleString();
+                document.getElementById('expense-jpy').value = res;
+            } catch(e) { alert("請輸入正確算式"); }
+        }
+
+        function triggerCamera() { document.getElementById('camera-input').click(); }
+
+        function processImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.getElementById('img-canvas');
+                    const ctx = canvas.getContext('2d');
+                    // 壓縮圖片：寬度固定 300px
+                    const scale = 300 / img.width;
+                    canvas.width = 300;
+                    canvas.height = img.height * scale;
+                    ctx.drawImage(img, 0, 0, 300, canvas.height);
+                    currentThumbnail = canvas.toDataURL('image/jpeg', 0.6); // 降低質量以節省空間
+                    alert("照片已上傳並壓縮成功");
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addExpense() {
+            const note = document.getElementById('expense-note').value;
+            const jpy = document.getElementById('expense-jpy').value;
+            if(!note || !jpy) return alert("請輸入資訊");
+
+            const data = {
+                id: Date.now(),
+                note: note,
+                jpy: parseFloat(jpy),
+                twd: Math.round(jpy * rate),
+                img: currentThumbnail,
+                time: new Date().toLocaleDateString()
+            };
+
+            let logs = JSON.parse(localStorage.getItem('trip_logs') || '[]');
+            logs.unshift(data);
+            localStorage.setItem('trip_logs', JSON.stringify(logs));
+            
+            // 重置
+            document.getElementById('expense-note').value = "";
+            document.getElementById('expense-jpy').value = "";
+            currentThumbnail = "";
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            const logs = JSON.parse(localStorage.getItem('trip_logs') || '[]');
+            const list = document.getElementById('expense-list');
+            list.innerHTML = logs.map(item => `
+                <div class="muji-card p-3 flex items-center gap-3">
+                    ${item.img ? `<img src="${item.img}" class="w-12 h-12 object-cover rounded shadow-sm">` : `<div class="w-12 h-12 bg-gray-100 flex items-center justify-center text-gray-300 rounded"><i class="fa-solid fa-receipt"></i></div>`}
+                    <div class="flex-1">
+                        <h5 class="text-xs font-medium">${item.note}</h5>
+                        <p class="text-[10px] text-gray-400">${item.time}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-bold">¥${item.jpy.toLocaleString()}</p>
+                        <p class="text-[10px] text-red-900">NT$ ${item.twd.toLocaleString()}</p>
+                        <button onclick="deleteExp(${item.id})" class="text-[9px] text-gray-300">刪除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteExp(id) {
+            let logs = JSON.parse(localStorage.getItem('trip_logs') || '[]');
+            logs = logs.filter(i => i.id !== id);
+            localStorage.setItem('trip_logs', JSON.stringify(logs));
+            renderExpenses();
+        }
+
+        // --- Memo Logic ---
+        function saveMemo() {
+            const txt = document.getElementById('memo-input').value;
+            localStorage.setItem('trip_memo', txt);
+            parseLinks(txt);
+            alert("備忘錄已儲存");
+        }
+
+        function parseLinks(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const links = text.match(urlRegex) || [];
+            const container = document.getElementById('memo-buttons');
+            container.innerHTML = links.map(l => `<a href="${l}" target="_blank" class="px-3 py-1 bg-stone-100 border rounded text-[10px] flex items-center gap-1"><i class="fa-solid fa-link"></i> 開啟網址</a>`).join('');
+        }
+
+        // --- Init ---
+        window.onload = () => {
+            renderExpenses();
+            const memo = localStorage.getItem('trip_memo') || '';
+            document.getElementById('memo-input').value = memo;
+            parseLinks(memo);
+        };
+    </script>
+</body>
+</html>
