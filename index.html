@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tokyo Trip 2026</title>
     
-    <!-- 1. 錯誤偵測腳本 (若畫面空白，會彈出視窗告知原因) -->
-    <script>
-        window.onerror = function(msg, url, lineNo, columnNo, error) {
-            alert('⚠️ 程式發生錯誤：\n' + msg + '\n第 ' + lineNo + ' 行');
-            return false;
-        };
-    </script>
-    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -86,10 +78,10 @@
 
     <!-- Main Content Area -->
     <main id="main-container" class="flex-1 overflow-y-auto pt-16 pb-24 px-4 hide-scrollbar">
-        <!-- 預設載入畫面 -->
+        <!-- Default Loading State -->
         <div class="flex flex-col items-center justify-center h-full text-muji-sub space-y-4">
             <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
-            <p class="text-sm tracking-widest">載入中...</p>
+            <p class="text-sm tracking-widest">正在載入行程...</p>
         </div>
     </main>
 
@@ -119,10 +111,10 @@
 
     <!-- JavaScript Logic -->
     <script>
-        // --- Data: Itinerary ---
+        // --- Data: Itinerary (Updated) ---
         const tripData = [
             {
-                day: "D1", date: "02/13 (五)", title: "抵達東京 & 淺草之夜", stay: "Star House Ueno Tokyo",
+                day: "D1", date: "02/13 (五)", title: "抵達東京 & 廚具街與淺草之夜", stay: "Star House Ueno Tokyo",
                 events: [
                     { time: "12:25", icon: "fa-plane-arrival", title: "抵達 成田機場 (NRT)", desc: "BR184 | 第一航廈", map: "成田國際機場 第一航廈" },
                     { time: "13:30", icon: "fa-train", title: "Skyliner 往上野", desc: "41分鐘 | ¥2,580", map: "成田機場站" },
@@ -194,7 +186,6 @@
 
         // --- Helper: Generate Google Maps Link ---
         function getMapLink(query, text) {
-            if(!query) return text;
             const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
             return `<a href="${url}" target="_blank" class="text-muji-sub hover:text-muji-accent underline decoration-dotted underline-offset-2 transition-colors" onclick="event.stopPropagation();"><i class="fa-solid fa-location-dot mr-1"></i>${text}</a>`;
         }
@@ -218,9 +209,6 @@
             `;
             
             tripData.forEach((day, index) => {
-                // 安全檢查：確保 stay 欄位存在
-                const stayName = day.stay ? day.stay.split(' ')[0] : '住宿';
-                
                 html += `
                     <div class="bg-white rounded-lg shadow-sm border border-muji-border mb-6 overflow-hidden fade-in" style="animation-delay: ${index * 0.05}s">
                         <div class="bg-muji-bg p-3 border-b border-muji-border flex justify-between items-center">
@@ -228,7 +216,7 @@
                                 <span class="font-mono text-xl font-bold text-muji-text mr-2">${day.day}</span>
                                 <span class="text-sm text-muji-sub font-medium">${day.date}</span>
                             </div>
-                            <span class="text-xs bg-white border border-muji-border px-2 py-1 rounded text-muji-sub">${stayName}</span>
+                            <span class="text-xs bg-white border border-muji-border px-2 py-1 rounded text-muji-sub">${day.stay.split(' ')[0]}</span>
                         </div>
                         <div class="p-4">
                             <h3 class="font-bold text-lg mb-4 text-muji-text">${day.title}</h3>
@@ -302,11 +290,7 @@
         function renderWallet() {
             // LocalStorage Keys
             const LS_EXPENSE_KEY = 'tokyo_expenses';
-            let expenses = [];
-            try {
-                expenses = JSON.parse(localStorage.getItem(LS_EXPENSE_KEY)) || [];
-            } catch(e) { expenses = []; }
-            
+            const expenses = JSON.parse(localStorage.getItem(LS_EXPENSE_KEY)) || [];
             const exchangeRate = 0.22; // 簡單範例，可設為變數
 
             // Helper to save
@@ -367,7 +351,6 @@
             window.clearExpenses = () => {
                 if(confirm('確定清除所有記帳資料？')) {
                     localStorage.removeItem(LS_EXPENSE_KEY);
-                    expenses = []; // Update local var
                     renderWalletUI();
                 }
             }
@@ -387,7 +370,7 @@
             };
 
             function renderWalletUI() {
-                const listHtml = expenses.map(ex => `
+                const listHtml = JSON.parse(localStorage.getItem(LS_EXPENSE_KEY) || '[]').map(ex => `
                     <div class="flex items-center bg-white p-3 rounded border border-muji-border mb-2">
                         ${ex.photo ? `<img src="${ex.photo}" class="w-12 h-12 object-cover rounded mr-3 border border-stone-100" onclick="window.open(this.src)">` : '<div class="w-12 h-12 bg-stone-100 rounded mr-3 flex items-center justify-center text-stone-300"><i class="fa-solid fa-image"></i></div>'}
                         <div class="flex-1">
@@ -452,19 +435,16 @@
         function renderLists() {
             // Checklist Logic
             const LS_CHECK_KEY = 'tokyo_checklist';
-            let checks = [];
-            try {
-                 checks = JSON.parse(localStorage.getItem(LS_CHECK_KEY)) || [
-                    {id:1, text:"護照 & 影本", done:false},
-                    {id:2, text:"VJW 截圖", done:false},
-                    {id:3, text:"日幣現金 (OS Drug用)", done:false},
-                    {id:4, text:"信用卡 (海外回饋)", done:false},
-                    {id:5, text:"SIM卡 / 漫遊", done:false},
-                    {id:6, text:"小孩推車", done:false},
-                    {id:7, text:"常備藥品", done:false},
-                    {id:8, text:"駕照日文譯本 (自駕必備)", done:false}
-                ];
-            } catch(e) {}
+            let checks = JSON.parse(localStorage.getItem(LS_CHECK_KEY)) || [
+                {id:1, text:"護照 & 影本", done:false},
+                {id:2, text:"VJW 截圖", done:false},
+                {id:3, text:"日幣現金 (OS Drug用)", done:false},
+                {id:4, text:"信用卡 (海外回饋)", done:false},
+                {id:5, text:"SIM卡 / 漫遊", done:false},
+                {id:6, text:"小孩推車", done:false},
+                {id:7, text:"常備藥品", done:false},
+                {id:8, text:"駕照日文譯本 (自駕必備)", done:false}
+            ];
 
             window.toggleCheck = (id) => {
                 checks = checks.map(c => c.id === id ? {...c, done: !c.done} : c);
@@ -517,85 +497,80 @@
                 document.getElementById('lists-content').innerHTML = html;
             }
 
-            function renderInfo() {
-                return `
-                    <div class="fade-in space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" class="bg-white p-6 rounded-lg shadow-sm border border-muji-border flex flex-col items-center justify-center gap-2 btn-press">
-                                <i class="fa-solid fa-cloud-sun text-3xl text-sky-500"></i>
-                                <span class="text-sm font-medium">天氣預報</span>
-                            </a>
-                            <a href="tel:119" class="bg-white p-6 rounded-lg shadow-sm border border-muji-border flex flex-col items-center justify-center gap-2 btn-press">
-                                <i class="fa-solid fa-truck-medical text-3xl text-red-500"></i>
-                                <span class="text-sm font-medium">救護車 119</span>
-                            </a>
-                        </div>
+            setTimeout(renderListsUI, 0);
+            return '<div id="lists-content"></div>';
+        }
 
-                        <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
-                            <h3 class="font-bold text-muji-text mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i> 緊急聯絡
-                            </h3>
-                            <ul class="text-sm space-y-2 text-muji-sub">
-                                <li><strong>警察局：</strong> 110</li>
-                                <li><strong>外交部旅外急難救助：</strong> <br><a href="tel:+81-3-3280-7811" class="text-blue-500 underline">+81-3-3280-7811</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
-                            <h3 class="font-bold text-muji-text mb-3">⚠️ 旅遊注意事項</h3>
-                            <ul class="list-disc list-inside text-sm text-muji-sub space-y-1">
-                                <li>日本計程車車門為自動開關，請勿動手去拉。</li>
-                                <li>電車內請將手機設為靜音，避免通話。</li>
-                                <li>垃圾請帶回飯店或尋找車站垃圾桶，路上極少垃圾桶。</li>
-                                <li>富士野生動物園自駕請務必鎖好車門窗。</li>
-                            </ul>
-                        </div>
+        function renderInfo() {
+            return `
+                <div class="fade-in space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" class="bg-white p-6 rounded-lg shadow-sm border border-muji-border flex flex-col items-center justify-center gap-2 btn-press">
+                            <i class="fa-solid fa-cloud-sun text-3xl text-sky-500"></i>
+                            <span class="text-sm font-medium">天氣預報</span>
+                        </a>
+                        <a href="tel:119" class="bg-white p-6 rounded-lg shadow-sm border border-muji-border flex flex-col items-center justify-center gap-2 btn-press">
+                            <i class="fa-solid fa-truck-medical text-3xl text-red-500"></i>
+                            <span class="text-sm font-medium">救護車 119</span>
+                        </a>
                     </div>
-                `;
-            }
 
-            // --- Router ---
-            function router(page) {
-                const container = document.getElementById('main-container');
-                const btns = document.querySelectorAll('.nav-btn');
-                
-                // UI Toggle
-                btns.forEach(btn => {
-                    if(btn.dataset.target === page) {
-                        btn.classList.add('text-muji-text');
-                        btn.classList.remove('text-muji-sub');
-                    } else {
-                        btn.classList.remove('text-muji-text');
-                        btn.classList.add('text-muji-sub');
-                    }
-                });
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
+                        <h3 class="font-bold text-muji-text mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i> 緊急聯絡
+                        </h3>
+                        <ul class="text-sm space-y-2 text-muji-sub">
+                            <li><strong>警察局：</strong> 110</li>
+                            <li><strong>外交部旅外急難救助：</strong> <br><a href="tel:+81-3-3280-7811" class="text-blue-500 underline">+81-3-3280-7811</a></li>
+                        </ul>
+                    </div>
 
-                // Content Render
-                let content = '';
-                try {
-                    switch(page) {
-                        case 'plan': content = renderPlan(); break;
-                        case 'guide': content = renderGuide(); break;
-                        case 'wallet': content = renderWallet(); break;
-                        case 'lists': content = renderLists(); break;
-                        case 'info': content = renderInfo(); break;
-                    }
-                    container.innerHTML = content;
-                    container.scrollTo(0, 0); // 確保捲軸回到頂部
-                } catch(e) {
-                    console.error(e);
-                    alert("頁面渲染錯誤：" + e.message);
-                }
-            }
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
+                        <h3 class="font-bold text-muji-text mb-3">⚠️ 旅遊注意事項</h3>
+                        <ul class="list-disc list-inside text-sm text-muji-sub space-y-1">
+                            <li>日本計程車車門為自動開關，請勿動手去拉。</li>
+                            <li>電車內請將手機設為靜音，避免通話。</li>
+                            <li>垃圾請帶回飯店或尋找車站垃圾桶，路上極少垃圾桶。</li>
+                            <li>富士野生動物園自駕請務必鎖好車門窗。</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
 
-            // Initialize
-            document.addEventListener('DOMContentLoaded', () => {
-                try {
-                    router('plan');
-                } catch(e) {
-                    alert("初始化失敗：" + e.message);
+        // --- Router ---
+        function router(page) {
+            const container = document.getElementById('main-container');
+            const btns = document.querySelectorAll('.nav-btn');
+            
+            // UI Toggle
+            btns.forEach(btn => {
+                if(btn.dataset.target === page) {
+                    btn.classList.add('text-muji-text');
+                    btn.classList.remove('text-muji-sub');
+                } else {
+                    btn.classList.remove('text-muji-text');
+                    btn.classList.add('text-muji-sub');
                 }
             });
+
+            // Content Render
+            let content = '';
+            switch(page) {
+                case 'plan': content = renderPlan(); break;
+                case 'guide': content = renderGuide(); break;
+                case 'wallet': content = renderWallet(); break;
+                case 'lists': content = renderLists(); break;
+                case 'info': content = renderInfo(); break;
+            }
+            container.innerHTML = content;
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            router('plan');
+        });
 
     </script>
 </body>
