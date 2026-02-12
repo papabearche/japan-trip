@@ -171,4 +171,403 @@
             {
                 day: "D6", date: "02/18 (三)", title: "補貨 & 返家", stay: "溫暖的家",
                 events: [
-                    { time: "09:30", icon: "fa-shirt", title: "UN
+                    { time: "09:30", icon: "fa-shirt", title: "UNIQLO 御徒町店", desc: "吉池大樓 | 發熱衣、限定款", map: "UNIQLO Okachimachi Yoshiike" },
+                    { time: "10:30", icon: "fa-bag-shopping", title: "多慶屋 (Takeya)", desc: "最後衝刺：零食藥妝紀念品", map: "Takeya Okachimachi" },
+                    { time: "11:40", icon: "fa-taxi", title: "前往京成上野站", desc: "計程車 (行李多必搭)", map: "京成上野站" },
+                    { time: "12:00", icon: "fa-train", title: "Skyliner 往機場", desc: "41分鐘", map: "成田國際機場" },
+                    { time: "12:45", icon: "fa-plane-departure", title: "機場報到", desc: "BR197 (14:00起飛)", map: "成田國際機場 第一航廈" }
+                ]
+            }
+        ];
+
+        // --- Helper: Generate Google Maps Link ---
+        function getMapLink(query, text) {
+            const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+            return `<a href="${url}" target="_blank" class="text-muji-sub hover:text-muji-accent underline decoration-dotted underline-offset-2 transition-colors" onclick="event.stopPropagation();"><i class="fa-solid fa-location-dot mr-1"></i>${text}</a>`;
+        }
+
+        // --- Render Functions ---
+
+        function renderPlan() {
+            let html = `
+                <div class="mb-4 bg-stone-100 border border-stone-200 p-3 rounded-md text-xs text-stone-600 flex items-start gap-2">
+                    <i class="fa-solid fa-lightbulb mt-0.5 text-yellow-600"></i>
+                    <div>
+                        <strong>購物攻略：</strong> 
+                        D1 廚具、D2 玩具/便宜藥妝(現金)、D5 機能衣、D6 衣服/伴手禮。
+                    </div>
+                </div>
+                <div class="mb-4 text-center">
+                    <a href="https://www.gotokyo.org/book/actibook/AO_2503_vege_EN/?detailFlg=0" target="_blank" class="inline-block bg-green-700 text-white px-4 py-2 rounded-full text-xs shadow-md">
+                        <i class="fa-solid fa-leaf mr-1"></i> 東京蔬食友善指南 (電子書)
+                    </a>
+                </div>
+            `;
+            
+            tripData.forEach((day, index) => {
+                html += `
+                    <div class="bg-white rounded-lg shadow-sm border border-muji-border mb-6 overflow-hidden fade-in" style="animation-delay: ${index * 0.05}s">
+                        <div class="bg-muji-bg p-3 border-b border-muji-border flex justify-between items-center">
+                            <div>
+                                <span class="font-mono text-xl font-bold text-muji-text mr-2">${day.day}</span>
+                                <span class="text-sm text-muji-sub font-medium">${day.date}</span>
+                            </div>
+                            <span class="text-xs bg-white border border-muji-border px-2 py-1 rounded text-muji-sub">${day.stay.split(' ')[0]}</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-4 text-muji-text">${day.title}</h3>
+                            <div class="relative border-l-2 border-muji-border ml-2 space-y-6 pb-2">
+                                ${day.events.map(e => `
+                                    <div class="ml-6 relative">
+                                        <div class="absolute -left-[31px] bg-white border-2 border-muji-border rounded-full w-8 h-8 flex items-center justify-center text-muji-sub text-xs">
+                                            <i class="fa-solid ${e.icon}"></i>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-mono text-xs text-muji-accent font-bold">${e.time}</span>
+                                            <span class="font-medium text-sm text-muji-text">${e.title}</span>
+                                            <span class="text-xs text-muji-sub mt-1">${e.desc}</span>
+                                            <div class="mt-1 text-xs">
+                                                ${getMapLink(e.map, e.map)}
+                                                ${e.link ? `<span class="mx-1">|</span> <a href="${e.link}" target="_blank" class="text-blue-600 hover:underline">連結</a>` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        function renderGuide() {
+            return `
+                <div class="space-y-6 fade-in">
+                    <!-- Intro Card -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-muji-border">
+                        <h2 class="font-serif text-2xl mb-2 text-muji-text">購物筆記 SHOPPING</h2>
+                        <div class="text-sm text-muji-sub space-y-3 leading-relaxed">
+                            <p><strong>合羽橋道具街：</strong> 專業廚師的採購地。著名的「食品模型」也在此。建議購買日製刀具（如旬、Global）比台灣便宜很多。</p>
+                            <p><strong>OS Drug (上野)：</strong> 店面雖小且破舊，但價格通常是全東京最便宜。⚠️ <span class="text-red-500">只收現金</span>，無免稅服務（但含稅價往往比別家免稅還低）。</p>
+                            <p><strong>Workman Girl：</strong> 日本近年爆紅的機能品牌，原本做工人服裝，現在推出高顏值、高機能且極便宜的女裝/童裝。防滑鞋、防水外套是必買。</p>
+                        </div>
+                        <div class="mt-4 text-right">
+                             <a href="https://www.google.com/maps/search/?api=1&query=Kappabashi+Dougu+Street" target="_blank" class="text-xs text-muji-accent underline">查看合羽橋地圖</a>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-muji-border">
+                        <h2 class="font-serif text-2xl mb-2 text-muji-text">箱根 HAKONE</h2>
+                        <p class="text-sm text-muji-sub leading-relaxed mb-4">
+                            自江戶時代起便是知名的溫泉療養地。自駕遊覽可以更靈活地前往大涌谷（必吃黑蛋，延壽7年傳說）與蘆之湖。
+                        </p>
+                        <div class="w-full h-48 bg-gray-200 rounded overflow-hidden">
+                             <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=138.9800,35.2000,139.0500,35.2500&layer=mapnik"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-muji-border">
+                        <h2 class="font-serif text-xl mb-2 text-muji-text">TeamLab Planets</h2>
+                        <p class="text-sm text-muji-sub leading-relaxed">
+                            「身臨其境」的藝術展。這裡要求赤腳進入，甚至會走過水中，請穿著方便捲起褲管的褲子。
+                        </p>
+                         <div class="mt-4 p-3 bg-stone-50 rounded text-xs">
+                             <a href="https://www.gotokyo.org/book/actibook/AO_2503_vege_EN/?detailFlg=0" target="_blank" class="flex items-center gap-2 text-green-700 font-bold">
+                                <i class="fa-solid fa-book"></i>
+                                <span>點此閱讀：東京蔬食餐廳指南</span>
+                             </a>
+                         </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderWallet() {
+            // LocalStorage Keys
+            const LS_EXPENSE_KEY = 'tokyo_expenses';
+            const expenses = JSON.parse(localStorage.getItem(LS_EXPENSE_KEY)) || [];
+            const exchangeRate = 0.22; // 簡單範例，可設為變數
+
+            // Helper to save
+            window.saveExpense = async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const item = form.item.value;
+                const cost = parseFloat(form.cost.value);
+                const file = form.photo.files[0];
+
+                let photoData = null;
+                if (file) {
+                    try {
+                        photoData = await compressImage(file);
+                    } catch (err) {
+                        alert("圖片處理失敗");
+                    }
+                }
+
+                const newExpense = {
+                    id: Date.now(),
+                    item,
+                    cost,
+                    photo: photoData,
+                    date: new Date().toLocaleString()
+                };
+
+                expenses.unshift(newExpense);
+                localStorage.setItem(LS_EXPENSE_KEY, JSON.stringify(expenses));
+                form.reset();
+                renderWalletUI(); // Re-render
+            };
+
+            // Image Compression
+            function compressImage(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.src = event.target.result;
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const MAX_WIDTH = 600;
+                            const scaleSize = MAX_WIDTH / img.width;
+                            canvas.width = MAX_WIDTH;
+                            canvas.height = img.height * scaleSize;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            resolve(canvas.toDataURL('image/jpeg', 0.6));
+                        }
+                        img.onerror = reject;
+                    }
+                    reader.onerror = reject;
+                });
+            }
+
+            window.clearExpenses = () => {
+                if(confirm('確定清除所有記帳資料？')) {
+                    localStorage.removeItem(LS_EXPENSE_KEY);
+                    renderWalletUI();
+                }
+            }
+
+            // Converter Logic
+            window.calcRate = () => {
+                const input = document.getElementById('rate-input').value;
+                const display = document.getElementById('rate-result');
+                try {
+                    // Safe eval for basic math
+                    const yen = Function('"use strict";return (' + input + ')')();
+                    const twd = Math.round(yen * exchangeRate);
+                    display.innerHTML = `¥${yen} ≈ <span class="text-muji-accent font-bold">NT$${twd}</span>`;
+                } catch (e) {
+                    display.innerHTML = '...';
+                }
+            };
+
+            function renderWalletUI() {
+                const listHtml = JSON.parse(localStorage.getItem(LS_EXPENSE_KEY) || '[]').map(ex => `
+                    <div class="flex items-center bg-white p-3 rounded border border-muji-border mb-2">
+                        ${ex.photo ? `<img src="${ex.photo}" class="w-12 h-12 object-cover rounded mr-3 border border-stone-100" onclick="window.open(this.src)">` : '<div class="w-12 h-12 bg-stone-100 rounded mr-3 flex items-center justify-center text-stone-300"><i class="fa-solid fa-image"></i></div>'}
+                        <div class="flex-1">
+                            <div class="font-medium text-muji-text">${ex.item}</div>
+                            <div class="text-[10px] text-muji-sub">${ex.date.split(',')[0]}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-mono font-bold text-muji-text">¥${ex.cost}</div>
+                            <div class="font-mono text-xs text-muji-sub">NT$${Math.round(ex.cost * exchangeRate)}</div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const html = `
+                    <div class="fade-in space-y-6">
+                        <!-- Calculator -->
+                        <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
+                            <h3 class="text-sm font-bold text-muji-sub mb-2 uppercase tracking-wider">Rate Converter (0.22)</h3>
+                            <div class="flex gap-2">
+                                <input id="rate-input" type="text" placeholder="輸入算式 (如 500+200*3)" class="flex-1 bg-muji-bg border-none rounded p-3 font-mono text-lg outline-none focus:ring-1 focus:ring-muji-sub" onkeyup="if(event.key==='Enter') calcRate()">
+                                <button onclick="calcRate()" class="bg-muji-text text-white px-4 rounded shadow-sm active:scale-95 transition-transform">=</button>
+                            </div>
+                            <div id="rate-result" class="mt-3 text-right text-lg font-mono text-muji-text h-6">¥0 ≈ NT$0</div>
+                        </div>
+
+                        <!-- Expense Form -->
+                        <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
+                            <h3 class="text-sm font-bold text-muji-sub mb-3 uppercase tracking-wider">New Expense</h3>
+                            <form onsubmit="saveExpense(event)" class="space-y-3">
+                                <input name="item" type="text" placeholder="品項" required class="w-full bg-muji-bg border border-transparent focus:border-muji-border rounded p-2 outline-none transition-colors">
+                                <div class="flex gap-2">
+                                    <input name="cost" type="number" placeholder="日幣金額" required class="flex-1 bg-muji-bg border border-transparent focus:border-muji-border rounded p-2 outline-none font-mono">
+                                    <label class="bg-stone-200 text-stone-500 w-12 flex items-center justify-center rounded cursor-pointer hover:bg-stone-300">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <input name="photo" type="file" accept="image/*" class="hidden">
+                                    </label>
+                                </div>
+                                <button type="submit" class="w-full bg-muji-text text-white py-2 rounded shadow-sm text-sm tracking-wide mt-2">記錄 SAVE</button>
+                            </form>
+                        </div>
+
+                        <!-- List -->
+                        <div>
+                            <div class="flex justify-between items-end mb-2">
+                                <h3 class="text-sm font-bold text-muji-sub uppercase tracking-wider">History</h3>
+                                <button onclick="clearExpenses()" class="text-xs text-red-400 underline">Clear</button>
+                            </div>
+                            <div id="expense-list">
+                                ${listHtml || '<div class="text-center text-stone-300 py-4">No records yet</div>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('wallet-content').innerHTML = html;
+            }
+
+            // Initial render container
+            setTimeout(renderWalletUI, 0);
+            return '<div id="wallet-content"></div>';
+        }
+
+        function renderLists() {
+            // Checklist Logic
+            const LS_CHECK_KEY = 'tokyo_checklist';
+            let checks = JSON.parse(localStorage.getItem(LS_CHECK_KEY)) || [
+                {id:1, text:"護照 & 影本", done:false},
+                {id:2, text:"VJW 截圖", done:false},
+                {id:3, text:"日幣現金 (OS Drug用)", done:false},
+                {id:4, text:"信用卡 (海外回饋)", done:false},
+                {id:5, text:"SIM卡 / 漫遊", done:false},
+                {id:6, text:"小孩推車", done:false},
+                {id:7, text:"常備藥品", done:false},
+                {id:8, text:"駕照日文譯本 (自駕必備)", done:false}
+            ];
+
+            window.toggleCheck = (id) => {
+                checks = checks.map(c => c.id === id ? {...c, done: !c.done} : c);
+                localStorage.setItem(LS_CHECK_KEY, JSON.stringify(checks));
+                renderListsUI();
+            };
+
+            // Memo Logic
+            const LS_MEMO_KEY = 'tokyo_memo';
+            let memoText = localStorage.getItem(LS_MEMO_KEY) || "";
+
+            window.saveMemo = (val) => {
+                localStorage.setItem(LS_MEMO_KEY, val);
+                document.getElementById('memo-display').innerHTML = linkify(val);
+            };
+
+            function linkify(text) {
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                return text.replace(urlRegex, function(url) {
+                    return `<a href="${url}" target="_blank" class="text-blue-500 underline break-all">${url}</a>`;
+                }).replace(/\n/g, '<br>');
+            }
+
+            function renderListsUI() {
+                const checkHtml = checks.map(c => `
+                    <div class="flex items-center p-3 border-b border-stone-100 last:border-0 cursor-pointer" onclick="toggleCheck(${c.id})">
+                        <div class="w-5 h-5 rounded border ${c.done ? 'bg-muji-text border-muji-text text-white' : 'border-stone-300 bg-white'} flex items-center justify-center mr-3 transition-colors">
+                            ${c.done ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                        </div>
+                        <span class="${c.done ? 'text-stone-400 line-through' : 'text-muji-text'} transition-colors">${c.text}</span>
+                    </div>
+                `).join('');
+
+                const html = `
+                    <div class="fade-in space-y-6">
+                        <div class="bg-white rounded-lg shadow-sm border border-muji-border overflow-hidden">
+                            <div class="bg-stone-100 p-3 text-xs font-bold text-muji-sub uppercase tracking-wider">Pre-travel Checklist</div>
+                            <div>${checkHtml}</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-sm border border-muji-border overflow-hidden p-4">
+                            <div class="text-xs font-bold text-muji-sub uppercase tracking-wider mb-2">Memo</div>
+                            <textarea class="w-full bg-muji-bg p-3 rounded text-sm text-muji-text outline-none border border-transparent focus:border-muji-border h-32 mb-2" 
+                                placeholder="輸入筆記..." 
+                                oninput="saveMemo(this.value)">${memoText}</textarea>
+                            <div id="memo-display" class="text-sm text-stone-600 p-2 bg-stone-50 rounded min-h-[50px] whitespace-pre-wrap">${linkify(memoText)}</div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('lists-content').innerHTML = html;
+            }
+
+            setTimeout(renderListsUI, 0);
+            return '<div id="lists-content"></div>';
+        }
+
+        function renderInfo() {
+            return `
+                <div class="fade-in space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" class="bg-white p-6 rounded-lg shadow-sm border border-muji-border flex flex-col items-center justify-center gap-2 btn-press">
+                            <i class="fa-solid fa-cloud-sun text-3xl text-sky-500"></i>
+                            <span class="text-sm font-medium">天氣預報</span>
+                        </a>
+                        <a href="tel:119" class="bg-white p-6 rounded-lg shadow-sm border border-muji-border flex flex-col items-center justify-center gap-2 btn-press">
+                            <i class="fa-solid fa-truck-medical text-3xl text-red-500"></i>
+                            <span class="text-sm font-medium">救護車 119</span>
+                        </a>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
+                        <h3 class="font-bold text-muji-text mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-yellow-500"></i> 緊急聯絡
+                        </h3>
+                        <ul class="text-sm space-y-2 text-muji-sub">
+                            <li><strong>警察局：</strong> 110</li>
+                            <li><strong>外交部旅外急難救助：</strong> <br><a href="tel:+81-3-3280-7811" class="text-blue-500 underline">+81-3-3280-7811</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-muji-border">
+                        <h3 class="font-bold text-muji-text mb-3">⚠️ 旅遊注意事項</h3>
+                        <ul class="list-disc list-inside text-sm text-muji-sub space-y-1">
+                            <li>日本計程車車門為自動開關，請勿動手去拉。</li>
+                            <li>電車內請將手機設為靜音，避免通話。</li>
+                            <li>垃圾請帶回飯店或尋找車站垃圾桶，路上極少垃圾桶。</li>
+                            <li>富士野生動物園自駕請務必鎖好車門窗。</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- Router ---
+        function router(page) {
+            const container = document.getElementById('main-container');
+            const btns = document.querySelectorAll('.nav-btn');
+            
+            // UI Toggle
+            btns.forEach(btn => {
+                if(btn.dataset.target === page) {
+                    btn.classList.add('text-muji-text');
+                    btn.classList.remove('text-muji-sub');
+                } else {
+                    btn.classList.remove('text-muji-text');
+                    btn.classList.add('text-muji-sub');
+                }
+            });
+
+            // Content Render
+            let content = '';
+            switch(page) {
+                case 'plan': content = renderPlan(); break;
+                case 'guide': content = renderGuide(); break;
+                case 'wallet': content = renderWallet(); break;
+                case 'lists': content = renderLists(); break;
+                case 'info': content = renderInfo(); break;
+            }
+            container.innerHTML = content;
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            router('plan');
+        });
+
+    </script>
+</body>
+</html>
